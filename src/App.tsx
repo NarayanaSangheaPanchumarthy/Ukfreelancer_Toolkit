@@ -46,6 +46,7 @@ import PrivacyPolicyGenerator from './PrivacyPolicyGenerator';
 import DPAGenerator from './DPAGenerator';
 import CookiePolicyGenerator from './CookiePolicyGenerator';
 import TermsOfServiceGenerator from './TermsOfServiceGenerator';
+import BusinessPlanGenerator from './BusinessPlanGenerator';
 import SearchModal from './SearchModal';
 import ReactGA from 'react-ga4';
 
@@ -586,6 +587,8 @@ export default function App() {
         <div className="bg-[#f5f7f9] min-h-screen"><PlanningTools setActiveTab={setActiveTab} /></div>
       ) : activeTab === 'Startup Toolkit' ? (
         <StartupToolkit setActiveTab={setActiveTab} />
+      ) : activeTab === 'Business Plan Generator' ? (
+        <BusinessPlanGenerator />
       ) : activeTab === 'UK Budget Planner' ? (
         <UKBudgetPlanner />
       ) : activeTab === 'Goal & Productivity Calculator' ? (

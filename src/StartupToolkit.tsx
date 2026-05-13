@@ -102,7 +102,7 @@ export default function StartupToolkit({ setActiveTab }: StartupToolkitProps) {
             
             <div className="flex flex-wrap items-center gap-4">
               <button 
-                onClick={() => setActiveTab('Start Up Expense Calculator')}
+                onClick={() => setActiveTab('Business Plan Generator')}
                 className="bg-[#1a1f24] text-white font-bold flex items-center px-8 py-4 hover:bg-black transition-all text-sm rounded shadow-lg"
               >
                 Create business plan
@@ -118,31 +118,33 @@ export default function StartupToolkit({ setActiveTab }: StartupToolkitProps) {
           </div>
           
           <div className="lg:w-2/5 relative">
-            <div className="relative w-full max-w-md mx-auto">
-              {/* Decorative stacked cards */}
-              <div className="absolute top-0 right-0 w-64 h-80 bg-white border border-slate-100 shadow-xl rounded-lg rotate-6 translate-x-12 -translate-y-8 z-0">
-                <div className="p-6">
-                  <div className="text-[10px] font-bold text-slate-300 mb-2">01</div>
-                  <div className="w-12 h-1 bg-slate-100 mb-4"></div>
-                  <div className="text-xl font-serif text-slate-400 leading-tight">Vision & Market Analysis</div>
+            <div className="relative w-full max-w-[400px] mx-auto h-[360px] right-2 lg:right-6">
+              
+              {/* Back Card (01) */}
+              <div className="absolute top-0 left-[-10px] sm:left-[-20px] w-[300px] h-[210px] bg-[#fdf5f3] border border-[#f8ebe7] shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-sm -rotate-[4deg] z-0">
+                <div className="p-8">
+                  <div className="text-[13px] font-bold text-[#cb9e8e] mb-12 tracking-widest leading-none">01</div>
+                  <div className="text-[44px] font-serif text-[#1c1917] tracking-tight leading-none truncate">Vision</div>
                 </div>
               </div>
               
-              <div className="absolute top-12 right-0 w-64 h-80 bg-white border border-slate-100 shadow-xl rounded-lg -rotate-3 translate-x-4 z-10">
-                <div className="p-6">
-                  <div className="text-[10px] font-bold text-slate-300 mb-2">02</div>
-                  <div className="w-12 h-1 bg-slate-100 mb-4"></div>
-                  <div className="text-xl font-serif text-slate-800 leading-tight">Product / Market Fit Strategy</div>
+              {/* Middle Card (02) */}
+              <div className="absolute top-[40px] right-[-10px] sm:right-[-30px] w-[300px] h-[210px] bg-[#faf0ed] border border-[#f8ebe7] shadow-[0_15px_40px_rgb(0,0,0,0.06)] rounded-sm rotate-[2deg] z-10 transition-transform hover:rotate-3">
+                <div className="p-8">
+                  <div className="text-[13px] font-bold text-[#cb9e8e] mb-12 tracking-widest leading-none">02</div>
                 </div>
               </div>
               
-              <div className="relative mt-24 mr-12 bg-white border border-slate-100 shadow-2xl rounded-lg p-8 z-20 aspect-[4/3] flex flex-col justify-center">
-                <div className="text-[10px] font-bold text-[#a67c52] mb-4">03</div>
-                <div className="w-16 h-1.5 bg-[#a67c52] mb-6"></div>
-                <div className="text-3xl font-serif text-slate-900 leading-tight tracking-tight">
+              {/* Front Card (03) */}
+              <div className="absolute top-[120px] left-[10px] sm:left-[20px] w-[330px] h-[210px] bg-[#fdf5f3] border border-[#f5e4df] shadow-[0_20px_50px_-10px_rgb(0,0,0,0.15)] rounded-sm p-8 z-20 flex flex-col justify-between">
+                <div className="text-[13px] font-bold text-[#cb9e8e] tracking-widest leading-none">03</div>
+                {/* Adding the line from the first example to make it polished */}
+                {/* <div className="w-12 h-1 bg-[#cb9e8e]"></div> */}
+                <div className="text-4xl font-serif text-[#1c1917] tracking-tight leading-tight mt-auto">
                   Financial Outlook
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -168,7 +170,9 @@ export default function StartupToolkit({ setActiveTab }: StartupToolkitProps) {
                 key={index} 
                 className="bg-white p-8 flex flex-col min-h-[320px] hover:bg-slate-50 transition-all cursor-pointer group"
                 onClick={() => {
-                  if (tool.title === 'Startup Business Plan Generator' || tool.title === 'Start Up Expense Calculator') {
+                  if (tool.title === 'Startup Business Plan Generator') {
+                    setActiveTab('Business Plan Generator');
+                  } else if (tool.title === 'Start Up Expense Calculator') {
                     setActiveTab('Start Up Expense Calculator');
                   }
                 }}
