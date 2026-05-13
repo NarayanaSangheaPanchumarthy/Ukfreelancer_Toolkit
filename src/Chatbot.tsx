@@ -43,7 +43,7 @@ export default function Chatbot() {
   useEffect(() => {
     if (!chatRef.current) {
       chatRef.current = ai.chats.create({
-        model: "gemini-3.1-flash-lite",
+        model: "gemini-3-flash-preview",
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
         },
@@ -73,7 +73,7 @@ export default function Chatbot() {
     try {
       if (!chatRef.current) {
          chatRef.current = ai.chats.create({
-          model: "gemini-3.1-flash-lite",
+          model: "gemini-3-flash-preview",
           config: {
             systemInstruction: SYSTEM_INSTRUCTION,
           },
@@ -84,11 +84,11 @@ export default function Chatbot() {
       const responseText = response.text || "I'm sorry, I couldn't process that.";
       
       setMessages(prev => [...prev, { role: 'model', text: responseText }]);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Chat error:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Sorry, I'm having trouble connecting right now. Please try again later." 
+        text: `Error: ${error?.message || "Sorry, I'm having trouble connecting right now. Please try again later."}` 
       }]);
     } finally {
       setIsLoading(false);

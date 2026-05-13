@@ -312,6 +312,112 @@ export default function App() {
             <div className="absolute top-10 left-10 w-48 h-16 bg-white/40 rounded-full blur-xl pointer-events-none"></div>
             <div className="absolute top-20 right-20 w-64 h-24 bg-white/40 rounded-full blur-2xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-1/4 w-96 h-32 bg-white/50 rounded-full blur-3xl pointer-events-none"></div>
+
+            {/* Left Side Decoration: Polished Sunset Arch */}
+            <div className="hidden lg:block absolute left-[-4%] xl:left-[2%] top-[5%] bottom-[5%] w-[340px] xl:w-[420px] pointer-events-none z-0 transition-transform duration-700 hover:scale-[1.02]">
+              <div className="relative w-full h-full flex flex-col justify-end items-center group">
+                {/* Glow behind */}
+                <div className="absolute inset-0 bg-fuchsia-500/20 blur-[80px] rounded-full mix-blend-screen transition-opacity duration-700 group-hover:opacity-100 opacity-60"></div>
+                
+                {/* Main Outer Arch Stone */}
+                <div className="absolute bottom-0 w-[85%] h-[95%] bg-gradient-to-br from-[#1c1d29] via-[#0f111a] to-black rounded-t-[200px] rounded-b-2xl border-[1.5px] border-[#383a54] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col items-center justify-end overflow-hidden">
+                   {/* Arch Inner Glow/Bevel */}
+                   <div className="absolute inset-[3px] rounded-t-[190px] rounded-b-[14px] border-[2px] border-white/5 shadow-[inset_0_0_30px_rgba(0,0,0,0.9)] pointer-events-none z-20"></div>
+                   
+                   {/* Left Pillar Segment */}
+                   <div className="absolute left-[12px] bottom-0 w-[18px] top-[180px] bg-gradient-to-r from-black/80 via-white/5 to-black/80 border-l border-r border-[#383a54]/50 z-20"></div>
+                   <div className="absolute left-[34px] bottom-0 w-[12px] top-[180px] bg-gradient-to-r from-black/60 via-white/3 to-black/60 border-r border-[#383a54]/30 z-20"></div>
+                   
+                   {/* Right Pillar Segment */}
+                   <div className="absolute right-[12px] bottom-0 w-[18px] top-[180px] bg-gradient-to-r from-black/80 via-white/5 to-black/80 border-l border-r border-[#383a54]/50 z-20"></div>
+                   <div className="absolute right-[34px] bottom-0 w-[12px] top-[180px] bg-gradient-to-r from-black/60 via-white/3 to-black/60 border-l border-[#383a54]/30 z-20"></div>
+
+                   {/* Portal / Inner Arch */}
+                   <div className="absolute bottom-0 left-[50px] right-[50px] top-[46px] rounded-t-[160px] overflow-hidden shadow-[inset_0_0_40px_rgba(0,0,0,1)] bg-slate-900 z-10 border-t border-[rgba(255,255,255,0.05)]">
+                      
+                      {/* Sunset Sky Background */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-[#10143c] via-[#482073] to-[#f07b99] pointer-events-none"></div>
+                      
+                      {/* Glowing Sun */}
+                      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-0">
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#ff5e8c] rounded-full blur-[45px] opacity-60"></div>
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[#ffe8b5] rounded-full blur-[6px]"></div>
+                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full blur-[1px]"></div>
+                      </div>
+                      
+                      {/* Distant Mountains / Hills */}
+                      <div className="absolute top-[45%] left-0 right-0 bottom-0 pointer-events-none overflow-hidden z-10">
+                         {/* Back Mountains */}
+                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute w-[200%] h-[120%] fill-[#30165a] -left-[40%] top-[0%] opacity-90 drop-shadow-[0_-5px_15px_rgba(255,0,128,0.3)]">
+                            <path d="M0,45 L15,25 L35,40 L55,10 L75,35 L100,20 L100,100 L0,100 Z" />
+                         </svg>
+                         {/* Mid Mountains */}
+                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute w-[200%] h-[120%] fill-[#1f0d3d] -left-[20%] top-[20%] drop-shadow-[0_-5px_10px_rgba(0,0,0,0.5)]">
+                            <path d="M0,35 L20,15 L40,30 L60,10 L80,35 L100,15 L100,100 L0,100 Z" />
+                         </svg>
+                      </div>
+                      
+                      {/* Ambient glow from bottom */}
+                      <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-[#e93e96]/30 to-transparent pointer-events-none z-10"></div>
+
+                      {/* Pink/Magenta fog overlay over the mountains */}
+                      <div className="absolute top-[40%] bottom-[20%] left-0 right-0 bg-gradient-to-b from-transparent via-[#f07b99]/30 to-transparent mix-blend-overlay z-10 blur-xl"></div>
+
+                      {/* Fog near stairs */}
+                      <div className="absolute bottom-[20%] left-0 right-0 h-[20%] bg-[#e93e96]/10 blur-xl z-20 pointer-events-none"></div>
+
+                      {/* Stairs */}
+                      <div className="absolute bottom-0 left-[-20%] right-[-20%] h-[38%] flex flex-col justify-end perspective-1000 z-20">
+                        {[...Array(14)].map((_, i) => {
+                          const widthStr = `${50 + (i * 3.5)}%`;
+                          return (
+                          <div 
+                            key={i} 
+                            className="mx-auto border-t border-t-[#f07b99]/40 border-b border-b-black/90 relative"
+                            style={{
+                              width: widthStr,
+                              height: `${6 + i * 1.5}%`,
+                              background: `linear-gradient(to bottom, #501d6d ${0}%, #1a0e35 ${100}%)`,
+                              transform: `translateY(${i * 1.2}px)`,
+                              boxShadow: 'inset 0 1px 2px rgba(244, 114, 182, 0.4), 0 5px 8px -2px rgba(0, 0, 0, 0.8)',
+                              zIndex: 30 + i
+                            }}
+                          >
+                            {/* Highlight on stair edge */}
+                            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#f9a8d4]/50 to-transparent"></div>
+                            {/* Inner shadow/ambient occlusion */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60"></div>
+                          </div>
+                        )})}
+                      </div>
+
+                      {/* Floor in front of stairs */}
+                      <div className="absolute bottom-[-10px] left-[-10px] right-[-10px] h-[15%] bg-gradient-to-b from-[#1a0e35] via-black to-black z-40 blur-sm"></div>
+
+                      {/* Portal inner top shadow */}
+                      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-black/80 to-transparent z-40 rounded-t-[160px] pointer-events-none"></div>
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side Decoration: Colourful floating boxes */}
+            <div className="hidden lg:flex absolute right-[2%] xl:right-[6%] top-[15%] bottom-[15%] w-[240px] flex-col justify-around pointer-events-none z-0 py-4">
+              {/* Project Box */}
+              <div className="bg-gradient-to-br from-indigo-500 to-purple-500 rounded-3xl p-6 shadow-2xl border-4 border-white/50 rotate-[6deg] transform transition-transform duration-500 self-end mr-4">
+                <span className="block text-white font-serif font-black text-3xl tracking-wider drop-shadow-md">Project</span>
+              </div>
+              
+              {/* Business Box */}
+              <div className="bg-gradient-to-br from-blue-400 to-teal-400 rounded-3xl p-6 shadow-2xl border-4 border-white/50 -rotate-[4deg] transform transition-transform duration-500 self-start ml-2">
+                <span className="block text-white font-serif font-black text-3xl tracking-wider drop-shadow-md">Business</span>
+              </div>
+              
+              {/* Legal Box */}
+              <div className="bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl p-6 shadow-2xl border-4 border-white/50 rotate-[8deg] transform transition-transform duration-500 self-end mr-8">
+                <span className="block text-white font-serif font-black text-3xl tracking-wider drop-shadow-md">Legal</span>
+              </div>
+            </div>
             
             <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10 flex flex-col md:flex-row items-center gap-12 lg:gap-8">
               <div className="flex-1 max-w-2xl">
