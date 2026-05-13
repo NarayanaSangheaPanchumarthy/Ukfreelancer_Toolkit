@@ -103,7 +103,7 @@ export default function StartupToolkit({ setActiveTab }: StartupToolkitProps) {
             <div className="flex flex-wrap items-center gap-4">
               <button 
                 onClick={() => setActiveTab('Start Up Expense Calculator')}
-                className="bg-[#1a1f24] text-white font-bold flex items-center px-8 py-4 px hover:bg-black transition-all text-sm rounded shadow-lg"
+                className="bg-[#1a1f24] text-white font-bold flex items-center px-8 py-4 hover:bg-black transition-all text-sm rounded shadow-lg"
               >
                 Create business plan
                 <ArrowRight className="w-4 h-4 ml-2" />

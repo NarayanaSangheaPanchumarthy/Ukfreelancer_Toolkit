@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
@@ -17,6 +16,8 @@ const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 // API routes
+app.set("trust proxy", true);
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
@@ -26,7 +27,8 @@ app.get("/api/auth/github/url", (req, res) => {
     return res.status(500).json({ error: "GitHub Client ID not configured" });
   }
 
-  const redirectUri = `${req.protocol}://${req.get("host")}/auth/callback`;
+  const appUrl = process.env.APP_URL || `${req.protocol}://${req.get("host")}`;
+  const redirectUri = `${appUrl}/auth/callback`;
   const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user,repo`;
   
   res.json({ url: githubAuthUrl });
@@ -130,6 +132,7 @@ app.post("/api/auth/github/logout", (req, res) => {
 // Vite middleware flow
 async function setupVite() {
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",

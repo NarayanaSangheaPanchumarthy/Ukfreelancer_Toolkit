@@ -47,6 +47,7 @@ import DPAGenerator from './DPAGenerator';
 import CookiePolicyGenerator from './CookiePolicyGenerator';
 import TermsOfServiceGenerator from './TermsOfServiceGenerator';
 import SearchModal from './SearchModal';
+import ReactGA from 'react-ga4';
 
 const tools = [
   {
@@ -113,11 +114,11 @@ const tools = [
     actionText: 'Calculate business budget'
   },
   {
-    title: 'Start Up Expense Calculator',
-    description: 'Estimate one-off launch costs and identify funding gaps before starting.',
-    tag: 'LAUNCH PLANNING',
+    title: 'Startup Toolkit',
+    description: 'Turn a business idea into a polished plan you can edit, export, and share.',
+    tag: 'STARTUP HUB',
     icon: Rocket,
-    actionText: 'Estimate startup costs'
+    actionText: 'Explore toolkit'
   },
   {
     title: 'Marriage Budget Calculator',
@@ -153,6 +154,31 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [githubUser, setGithubUser] = useState<any>(null);
   const [isConnecting, setIsConnecting] = useState(false);
+
+  React.useEffect(() => {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (measurementId) {
+      ReactGA.initialize(measurementId);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (measurementId) {
+      ReactGA.send({ hitType: "pageview", page: `/${activeTab.toLowerCase().replace(/ /g, '-')}`, title: activeTab });
+    }
+  }, [activeTab]);
+
+  const trackButtonClick = (action: string, label: string) => {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (measurementId) {
+      ReactGA.event({
+        category: 'Interactions',
+        action,
+        label,
+      });
+    }
+  };
 
   React.useEffect(() => {
     fetchGithubUser();
@@ -231,7 +257,10 @@ export default function App() {
           {navItems.map((item) => (
             <button
               key={item}
-              onClick={() => setActiveTab(item)}
+              onClick={() => {
+                trackButtonClick('Nav Click', item);
+                setActiveTab(item);
+              }}
               className={`inline-block pb-1 transition-colors ${
                 activeTab === item
                   ? 'text-slate-900 border-b-[3px] border-[#a67c52]'
@@ -305,20 +334,20 @@ export default function App() {
                 
                 <div className="flex flex-wrap items-center gap-4">
                   <button 
-                    onClick={() => setActiveTab('Invoices')}
+                    onClick={() => { trackButtonClick('Hero Action', 'Create VAT invoice'); setActiveTab('Invoices'); }}
                     className="bg-white text-blue-900 font-bold flex items-center px-6 py-4 hover:bg-slate-50 transition-colors text-sm shadow-lg rounded-lg"
                   >
                     Create VAT invoice
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </button>
                   <button 
-                    onClick={() => setActiveTab('VAT Calculator')}
+                    onClick={() => { trackButtonClick('Hero Action', 'Open VAT calculator'); setActiveTab('VAT Calculator'); }}
                     className="bg-blue-600/30 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-4 hover:bg-blue-600/40 transition-colors text-sm rounded-lg"
                   >
                     Open VAT calculator
                   </button>
                   <button 
-                    onClick={() => setActiveTab('Quotes')}
+                    onClick={() => { trackButtonClick('Hero Action', 'Create quote'); setActiveTab('Quotes'); }}
                     className="bg-blue-600/30 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-4 hover:bg-blue-600/40 transition-colors text-sm rounded-lg"
                   >
                     Create quote
@@ -374,6 +403,7 @@ export default function App() {
                 <div 
                   key={index} 
                   onClick={() => {
+                    trackButtonClick('Tool Click', tool.title);
                     const mappedTab: Record<string, string> = {
                       'Invoice Generator': 'Invoices',
                       'Quote / Estimate Generator': 'Quotes',
@@ -384,7 +414,7 @@ export default function App() {
                       'Consultation Booking': 'Consultation Booking',
                       'UK Budget Planner': 'UK Budget Planner',
                       'Business Budget Calculator': 'Business Budget Calculator',
-                      'Start Up Expense Calculator': 'Start Up Expense Calculator',
+                      'Startup Toolkit': 'Startup Toolkit',
                       'Marriage Budget Calculator': 'Marriage Budget Calculator',
                       'Goal & Productivity': 'Goal & Productivity Calculator',
                       'Digital Detox Calculator': 'Digital Detox Calculator'

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Download, Plus, Trash2 } from 'lucide-react';
+import { Download, Plus, Trash2, Cloud } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { initAuth } from './auth';
+import { saveFileToDrive } from './drive';
 
 interface Expense {
   id: string;
@@ -12,6 +14,17 @@ const COLORS = ['#a67c52', '#d6a54a', '#dcd8cf', '#eedfb4', '#1a1f24', '#7d8a83'
 
 export default function BusinessBudgetCalculator() {
   const [revenue, setRevenue] = useState<string>('12000');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  React.useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (clientId) {
+      const timer = setTimeout(() => initAuth(clientId), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const [expenses, setExpenses] = useState<Expense[]>([
     { id: '1', name: 'Payroll or owner pay', amount: 4200 },
     { id: '2', name: 'Software', amount: 480 },
@@ -55,6 +68,26 @@ export default function BusinessBudgetCalculator() {
 
   const handleDownload = () => window.print();
 
+  const handleSaveToDrive = async () => {
+    try {
+      setIsSaving(true);
+      setSaveSuccess(false);
+
+      const header = "Category,Amount\\n";
+      const csvStr = header + expenses.filter(e => e.amount > 0).map(e => `"${e.name}",${e.amount}`).join('\\n');
+      
+      const fileContent = `Business Budget Summary\\nRevenue: £${grossRevenue}\\nTotal Planned: £${totalPlanned}\\nRemaining: £${remaining}\\nUsed: ${margin.toFixed(0)}%\\n\\n` + csvStr;
+      
+      await saveFileToDrive('Business_Budget_Plan.csv', fileContent, 'text/csv');
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (err) {
+      alert("Failed to save to Google Drive");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="bg-[#f5f7f9] min-h-screen py-12 md:py-16">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -72,10 +105,16 @@ export default function BusinessBudgetCalculator() {
               Plan monthly revenue against payroll, software, marketing, premises, tax set-aside, and profit.
             </p>
           </div>
-          <button onClick={handleDownload} className="mt-6 md:mt-0 flex items-center bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors shrink-0">
-            <Download className="w-4 h-4 mr-2" />
-            Download summary
-          </button>
+          <div className="flex gap-3 shrink-0 flex-wrap">
+            <button onClick={handleDownload} className="mt-6 md:mt-0 flex items-center bg-white border border-slate-300 text-slate-800 px-6 py-3 font-bold text-sm hover:bg-slate-50 transition-colors shrink-0 rounded">
+              <Download className="w-4 h-4 mr-2" />
+              Download summary
+            </button>
+            <button onClick={handleSaveToDrive} disabled={isSaving} className="mt-6 md:mt-0 flex items-center bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors shrink-0 disabled:opacity-50 rounded shadow">
+              <Cloud className="w-4 h-4 mr-2" />
+              {isSaving ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save to Drive'}
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Download, Plus, Trash2 } from 'lucide-react';
+import { Download, Plus, Trash2, Cloud } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { initAuth } from './auth';
+import { saveFileToDrive } from './drive';
 
 interface Expense {
   id: string;
@@ -12,6 +14,17 @@ const COLORS = ['#1a1f24', '#eedfb4', '#a67c52', '#7d8a83', '#d6a54a', '#5c452e'
 
 export default function StartUpExpenseCalculator() {
   const [budget, setBudget] = useState<string>('25000');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  React.useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (clientId) {
+      const timer = setTimeout(() => initAuth(clientId), 1500); // Wait for API script to load just in case
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const [expenses, setExpenses] = useState<Expense[]>([
     { id: '1', name: 'Company setup and legal', amount: 900 },
     { id: '2', name: 'Equipment', amount: 4200 },
@@ -47,6 +60,26 @@ export default function StartUpExpenseCalculator() {
   const remainingBuffer = startingBudget - totalRequired;
   const margin = startingBudget > 0 ? (totalRequired / startingBudget) * 100 : 0;
 
+  const handleSaveToDrive = async () => {
+    try {
+      setIsSaving(true);
+      setSaveSuccess(false);
+
+      const header = "Category,Amount\\n";
+      const csvStr = header + expenses.filter(e => e.amount > 0).map(e => `"${e.name}",${e.amount}`).join('\\n');
+      
+      const fileContent = `Startup Expense Summary\\nBudget: £${startingBudget}\\nTotal Required: £${totalRequired}\\nRemaining: £${remainingBuffer}\\n\\n` + csvStr;
+      
+      await saveFileToDrive('Startup_Expense_Plan.csv', fileContent, 'text/csv');
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (err) {
+      alert("Failed to save to Google Drive");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const chartData = expenses.filter(c => c.amount > 0).map((c, i) => ({
     name: c.name,
     value: c.amount,
@@ -70,10 +103,16 @@ export default function StartUpExpenseCalculator() {
               Estimate one-off launch costs before opening: equipment, legal, marketing, stock, and runway.
             </p>
           </div>
-          <button onClick={() => window.print()} className="mt-6 md:mt-0 flex items-center bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors shrink-0">
-            <Download className="w-4 h-4 mr-2" />
-            Download summary
-          </button>
+          <div className="flex gap-3 shrink-0 flex-wrap">
+            <button onClick={() => window.print()} className="mt-6 md:mt-0 flex items-center bg-white border border-slate-300 text-slate-800 px-6 py-3 font-bold text-sm hover:bg-slate-50 transition-colors shrink-0 rounded">
+              <Download className="w-4 h-4 mr-2" />
+              Download summary
+            </button>
+            <button onClick={handleSaveToDrive} disabled={isSaving} className="mt-6 md:mt-0 flex items-center bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors shrink-0 disabled:opacity-50 rounded shadow">
+              <Cloud className="w-4 h-4 mr-2" />
+              {isSaving ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save to Drive'}
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">

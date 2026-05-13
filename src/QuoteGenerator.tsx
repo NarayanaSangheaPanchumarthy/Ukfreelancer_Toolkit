@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Download, Plus, Trash2, Loader2 } from 'lucide-react';
+import { Download, Plus, Trash2, Loader2, Cloud } from 'lucide-react';
 import ProFeaturesCTA from './ProFeaturesCTA';
 import { downloadPdf } from './pdfHelper';
+import { initAuth } from './auth';
+import { saveFileToDrive } from './drive';
 
 interface LineItem {
   id: string;
@@ -12,6 +14,17 @@ interface LineItem {
 
 export default function QuoteGenerator() {
   const [selectedTemplate, setSelectedTemplate] = useState<'Simple' | 'Detailed' | 'Legal'>('Simple');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  React.useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (clientId) {
+      const timer = setTimeout(() => initAuth(clientId), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const [milestones, setMilestones] = useState([
     { id: '1', task: 'Initial Consultation & Research', timing: 'Week 1' },
     { id: '2', task: 'Design & Prototyping', timing: 'Week 2-3' },
@@ -172,6 +185,33 @@ export default function QuoteGenerator() {
     setTimeout(() => setShowSuccess(false), 3000);
   };
 
+  const handleSaveToDrive = async () => {
+    if (!validateForm()) {
+      const firstError = document.querySelector('.error-text');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+    try {
+      setIsSaving(true);
+      setSaveSuccess(false);
+
+      const header = "Description,Qty,Rate,Amount\\n";
+      const csvStr = header + lineItems.map(e => `"${e.description}",${e.qty},${e.rate},${(e.qty * e.rate).toFixed(2)}`).join('\\n');
+      
+      const fileContent = `Quote Summary: ${quoteDetails.quoteNumber}\\nSubtotal: £${subtotal.toFixed(2)}\\nVAT: £${vatAmount.toFixed(2)}\\nTotal: £${total.toFixed(2)}\\n\\n` + csvStr;
+      
+      await saveFileToDrive(`Quote_${quoteDetails.quoteNumber}.csv`, fileContent, 'text/csv');
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (err) {
+      alert("Failed to save to Google Drive");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 pt-8">
       {/* Header */}
@@ -198,25 +238,35 @@ export default function QuoteGenerator() {
           {showSuccess && (
             <div className="mb-4 p-2 bg-green-50 border border-green-200 text-green-700 text-xs font-bold rounded animate-fade-in flex items-center">
               <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-              Quote PDF generated successfully!
+              Operation completed successfully!
             </div>
           )}
           <p className="text-slate-500 text-sm max-w-md leading-relaxed">
             Create a professional quote with line items, VAT treatment, live totals, and PDF export.
           </p>
         </div>
-        <button 
-          onClick={handleDownloadPdf}
-          disabled={isGeneratingPdf}
-          className="bg-[#1a1f24] text-white font-bold flex items-center px-6 py-3 border border-[#1a1f24] hover:bg-black transition-colors text-sm shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          {isGeneratingPdf ? (
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-          ) : (
-            <Download className="w-4 h-4 mr-2" />
-          )}
-          {isGeneratingPdf ? 'Generating PDF...' : 'Download PDF'}
-        </button>
+        <div className="flex flex-wrap gap-3">
+          <button 
+            onClick={handleDownloadPdf}
+            disabled={isGeneratingPdf}
+            className="bg-white text-slate-800 font-bold flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 transition-colors text-sm rounded shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isGeneratingPdf ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Download className="w-4 h-4 mr-2" />
+            )}
+            Download PDF
+          </button>
+          <button 
+            onClick={handleSaveToDrive}
+            disabled={isSaving}
+            className="bg-[#1a1f24] text-white font-bold flex items-center px-6 py-3 border border-[#1a1f24] hover:bg-black transition-colors text-sm shadow-sm rounded disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            <Cloud className="w-4 h-4 mr-2" />
+            {isSaving ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save to Drive'}
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
