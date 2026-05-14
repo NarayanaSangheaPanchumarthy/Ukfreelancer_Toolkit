@@ -162,6 +162,13 @@ export default function App() {
     if (measurementId) {
       ReactGA.initialize(measurementId);
     }
+    
+    // Read tab from URL on load
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
   }, []);
 
   React.useEffect(() => {
