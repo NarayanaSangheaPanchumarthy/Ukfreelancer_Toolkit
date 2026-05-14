@@ -77,263 +77,200 @@ ${formData.changes}
   };
 
   return (
-    <div className="bg-[#f5f7f9] min-h-screen py-12 md:py-16">
-      <div className="max-w-4xl mx-auto px-4 md:px-8">
-        <div className="mb-12">
-          <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">
-            COMPLIANCE & LEGAL
+    <div className="bg-slate-50 min-h-screen py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="mb-20">
+          <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+            <span className="w-8 h-[1px] bg-accent"></span>
+            LEGAL ARCHITECTURE
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-            Privacy Policy Generator
+          <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.9]">
+            Privacy <span className="italic text-accent">Notice</span> Engine
           </h1>
-          <p className="text-slate-600 text-lg mb-8 max-w-2xl">
-            UK GDPR / GDPR-compliant privacy notice covering controller details, processing purposes, lawful bases, retention, rights, and the ICO complaint route.
+          <p className="text-slate-500 text-xl font-light mb-12 max-w-2xl leading-relaxed">
+            UK GDPR-compliant privacy notice covering data controllership, processing purposes, and lawful bases for the digital standard.
           </p>
           
           <div className="flex flex-wrap gap-4 print:hidden">
             <button 
               onClick={copyText}
-              className="bg-white border border-slate-300 text-slate-800 px-6 py-3 font-bold text-sm hover:bg-slate-50 transition-colors flex items-center"
+              className="bg-white border border-slate-200 text-slate-800 px-10 py-5 font-bold text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all rounded-2xl shadow-sm flex items-center"
             >
-              <Copy className="w-4 h-4 mr-2" />
-              Copy text
+              <Copy className="w-4 h-4 mr-3" />
+              Copy Plan
             </button>
             <button 
               onClick={downloadPdf}
-              className="bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors flex items-center"
+              className="bg-slate-900 text-white px-10 py-5 font-bold text-[11px] uppercase tracking-widest hover:bg-black transition-all rounded-2xl shadow-xl flex items-center group"
             >
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
+              <Download className="w-4 h-4 mr-3 text-accent group-hover:scale-110 transition-transform" />
+              Export PDF
             </button>
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 p-8 shadow-sm mb-12 print:hidden">
-          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-6">Policy fields</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">WEBSITE / BRAND NAME</label>
-              <input 
-                type="text" name="brandName" value={formData.brandName} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
+        <div className="flex flex-col lg:flex-row gap-12 items-start mb-20">
+          {/* Inputs */}
+          <div className="w-full lg:w-1/2 space-y-8 print:hidden">
+            <div className="bg-white border border-slate-100 p-10 rounded-[2.5rem] shadow-2xl">
+              <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-10 text-center">Module Configuration</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Brand Identity</label>
+                  <input 
+                    type="text" name="brandName" value={formData.brandName} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Digital Domain</label>
+                  <input 
+                    type="text" name="websiteUrl" value={formData.websiteUrl} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Legal Entity</label>
+                  <input 
+                    type="text" name="legalName" value={formData.legalName} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Registry No.</label>
+                  <input 
+                    type="text" name="companiesHouseNo" value={formData.companiesHouseNo} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Controller Location</label>
+                  <textarea 
+                    name="address" value={formData.address} onChange={handleChange} rows={2}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-none"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Privacy Channel</label>
+                  <input 
+                    type="text" name="email" value={formData.email} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Data protection Officer</label>
+                  <textarea 
+                    name="dpoStatus" value={formData.dpoStatus} onChange={handleChange} rows={2}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-none"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Active Timestamp</label>
+                  <input 
+                    type="date" name="effectiveDate" value={formData.effectiveDate} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Scope of Retrieval</label>
+                  <textarea 
+                    name="dataWeCollect" value={formData.dataWeCollect} onChange={handleChange} rows={3}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Processing Intent</label>
+                  <textarea 
+                    name="purposes" value={formData.purposes} onChange={handleChange} rows={3}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Regulatory Basis</label>
+                  <textarea 
+                    name="lawfulBases" value={formData.lawfulBases} onChange={handleChange} rows={3}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">WEBSITE URL</label>
-              <input 
-                type="text" name="websiteUrl" value={formData.websiteUrl} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONTROLLER LEGAL NAME</label>
-              <input 
-                type="text" name="legalName" value={formData.legalName} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">COMPANIES HOUSE NO.</label>
-              <input 
-                type="text" name="companiesHouseNo" value={formData.companiesHouseNo} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONTROLLER ADDRESS</label>
-            <textarea 
-              name="address" value={formData.address} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-none"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PRIVACY CONTACT EMAIL</label>
-            <input 
-              type="text" name="email" value={formData.email} onChange={handleChange}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm md:w-1/2"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DPO CONTACT / STATUS</label>
-            <textarea 
-              name="dpoStatus" value={formData.dpoStatus} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-none"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">EFFECTIVE DATE</label>
-            <input 
-              type="date" name="effectiveDate" value={formData.effectiveDate} onChange={handleChange}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm md:w-1/2"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DATA WE COLLECT</label>
-            <textarea 
-              name="dataWeCollect" value={formData.dataWeCollect} onChange={handleChange} rows={3}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PURPOSES OF PROCESSING</label>
-            <textarea 
-              name="purposes" value={formData.purposes} onChange={handleChange} rows={3}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">LAWFUL BASES</label>
-            <textarea 
-              name="lawfulBases" value={formData.lawfulBases} onChange={handleChange} rows={3}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">RECIPIENTS / PROCESSORS</label>
-            <textarea 
-              name="recipients" value={formData.recipients} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">INTERNATIONAL TRANSFERS</label>
-            <textarea 
-              name="internationalTransfers" value={formData.internationalTransfers} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">RETENTION PERIODS</label>
-            <textarea 
-              name="retention" value={formData.retention} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DATA SUBJECT RIGHTS</label>
-            <textarea 
-              name="rights" value={formData.rights} onChange={handleChange} rows={3}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">COOKIES NOTE</label>
-            <textarea 
-              name="cookies" value={formData.cookies} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CHILDREN'S DATA</label>
-            <textarea 
-              name="childrenData" value={formData.childrenData} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div>
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CHANGES TO THIS NOTICE</label>
-            <textarea 
-              name="changes" value={formData.changes} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-slate-600 font-medium mb-4 print:hidden">Privacy policy preview</h3>
-          
-          <div className="bg-white border border-slate-200 p-8 shadow-sm print:shadow-none print:border-none print:p-0">
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">PRIVACY NOTICE</div>
-            <h2 className="text-3xl font-serif text-slate-900 mb-2">{formData.brandName} Privacy Policy</h2>
-            <p className="text-sm text-slate-500 mb-8 border-b border-slate-200 pb-8">
-              Effective {formData.effectiveDate} · {formData.websiteUrl}
-            </p>
-
-            <div className="space-y-6 text-sm text-slate-800 leading-relaxed max-w-3xl">
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">1. Who we are</h4>
-                <p>
-                  {formData.legalName} {formData.companiesHouseNo && `(Companies House no. ${formData.companiesHouseNo})`} of {formData.address.replace(/\n/g, ', ')} is the data controller responsible for your personal data. Contact: {formData.email}.
-                </p>
-                <p className="mt-2">
-                  Data Protection Officer: {formData.dpoStatus}
-                </p>
+          {/* Preview */}
+          <div className="flex-1 w-full relative">
+            <div className="lg:sticky lg:top-32 bg-white border border-slate-100 p-12 md:p-20 rounded-[3rem] shadow-2xl relative overflow-hidden print:shadow-none print:border-none print:p-0">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32"></div>
+              
+              <div className="flex justify-between items-start mb-20 relative z-10">
+                <div>
+                  <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6">OFFICIAL DOCUMENT</div>
+                  <h2 className="text-4xl font-serif text-slate-900 mb-2 tracking-tight">{formData.brandName}</h2>
+                  <p className="text-slate-400 font-serif italic text-lg">Privacy Policy</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">LAST MODIFIED</div>
+                  <div className="text-slate-900 font-medium font-mono text-xs">{formData.effectiveDate}</div>
+                </div>
               </div>
 
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">2. What data we collect</h4>
-                <p>{formData.dataWeCollect}</p>
-              </div>
+              <div className="space-y-12 text-slate-600 font-light leading-relaxed relative z-10">
+                <section>
+                  <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">01 controllership</h4>
+                  <p className="text-sm">
+                    <span className="font-bold text-slate-900">{formData.legalName}</span> {formData.companiesHouseNo && `(Companies House no. ${formData.companiesHouseNo})`} of {formData.address.replace(/\n/g, ', ')} is the data controller responsible for your personal data. 
+                  </p>
+                  <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-4">
+                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Inquiries</div>
+                    <div className="text-slate-900 font-mono text-xs">{formData.email}</div>
+                  </div>
+                </section>
 
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">3. Why we process it</h4>
-                <p>{formData.purposes}</p>
-              </div>
+                <section>
+                  <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">02 retrieval scope</h4>
+                  <p className="text-sm italic border-l-2 border-accent/20 pl-6">{formData.dataWeCollect}</p>
+                </section>
 
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">4. Lawful bases</h4>
-                <p>{formData.lawfulBases}</p>
-              </div>
+                <section>
+                  <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">03 intentionality</h4>
+                  <p className="text-sm">{formData.purposes}</p>
+                </section>
 
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">5. Who we share it with</h4>
-                <p>{formData.recipients}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">6. International transfers</h4>
-                <p>{formData.internationalTransfers}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">7. How long we keep it</h4>
-                <p>{formData.retention}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">8. Your rights</h4>
-                <p>{formData.rights}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">9. Cookies</h4>
-                <p>{formData.cookies}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">10. Children</h4>
-                <p>{formData.childrenData}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">11. Changes</h4>
-                <p>{formData.changes}</p>
+                <section className="pt-8 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] mb-4">Jurisdiction</h4>
+                    <p className="text-xs">United Kingdom · UK GDPR · PECR</p>
+                  </div>
+                  <div className="text-right">
+                    <h4 className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] mb-4">Authorization</h4>
+                    <p className="text-slate-400 font-serif italic">Verified Architecture</p>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
         </div>
         
-        <div className="mt-16 print:hidden">
+        <div className="mt-20 print:hidden text-center bg-white border border-slate-100 p-16 rounded-[3rem] shadow-sm">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-4xl font-serif text-slate-900 mb-6 tracking-tight">Enterprise Standard Compliance</h2>
+            <p className="text-slate-500 text-lg font-light leading-relaxed mb-12">
+              Our generators are built for UK professionals who need to meet GDPR standards without the overhead of expensive legal retainers.
+            </p>
             <ProFeaturesCTA />
+          </div>
         </div>
       </div>
     </div>

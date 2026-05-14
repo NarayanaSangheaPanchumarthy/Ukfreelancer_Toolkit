@@ -36,43 +36,72 @@ export default function FAQ() {
   };
 
   return (
-    <div className="mt-24 mb-8 max-w-3xl mx-auto">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-          Frequently asked questions
+    <div className="mt-32 mb-20 max-w-4xl mx-auto px-4">
+      <div className="text-center mb-16">
+        <div className="text-[10px] font-bold text-accent uppercase tracking-[0.3em] mb-4">
+          SUPPORT & CLARITY
+        </div>
+        <h2 className="text-4xl md:text-6xl font-serif text-slate-900 mb-6 tracking-tighter">
+          Frequently Asked <span className="italic text-accent">Questions</span>
         </h2>
-        <p className="text-slate-500 text-base">
-          Everything you need to know about the UK Freelancer Toolkit.
+        <p className="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+          Operational details, security protocols, and everything else you need to know about navigating the studio.
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {faqs.map((faq, index) => (
           <div 
             key={index}
-            className="border border-slate-200 bg-white hover:border-slate-300 transition-colors"
+            className={`group rounded-[2rem] border transition-all duration-500 ${
+              openIndex === index 
+                ? "bg-white border-slate-200 shadow-xl scale-[1.02]" 
+                : "bg-slate-50/50 border-slate-100 hover:border-slate-200 hover:bg-white"
+            }`}
           >
             <button
               onClick={() => toggleOpen(index)}
-              className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
+              className="w-full px-8 py-7 flex items-center justify-between text-left focus:outline-none"
             >
-              <span className="font-semibold text-slate-800 pr-8">{faq.question}</span>
-              {openIndex === index ? (
-                <ChevronUp className="w-5 h-5 text-slate-400 flex-shrink-0" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
-              )}
+              <div className="flex items-center gap-6">
+                <span className="text-[10px] font-bold text-accent font-mono opacity-40 group-hover:opacity-100 transition-opacity uppercase tracking-widest">
+                  Q{(index + 1).toString().padStart(2, '0')}
+                </span>
+                <span className={`text-lg font-serif tracking-tight transition-colors ${
+                  openIndex === index ? "text-slate-900" : "text-slate-700"
+                }`}>
+                  {faq.question}
+                </span>
+              </div>
+              <div className={`p-2 rounded-full transition-all duration-300 ${
+                openIndex === index ? "bg-accent text-white rotate-180" : "bg-white text-slate-400 group-hover:text-slate-600 shadow-sm"
+              }`}>
+                <ChevronDown className="w-4 h-4" />
+              </div>
             </button>
             
-            {openIndex === index && (
-              <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed text-sm border-t border-slate-100 mt-2">
-                <div className="pt-4">
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+              openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}>
+              <div className="px-20 pb-10 pt-0 text-slate-500 font-light leading-relaxed text-base">
+                <div className="pt-4 border-t border-slate-50 italic">
                   {faq.answer}
                 </div>
               </div>
-            )}
+            </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-20 p-12 bg-slate-900 rounded-[3rem] text-center relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full translate-x-32 -translate-y-32 blur-3xl group-hover:bg-accent/20 transition-all duration-1000"></div>
+        <h3 className="text-2xl font-serif text-white mb-4 relative z-10">Still seeking clarity?</h3>
+        <p className="text-slate-400 font-light mb-8 relative z-10 max-w-lg mx-auto">
+          Our specialized team is ready to assist with custom tool requirements or technical inquiries.
+        </p>
+        <button className="bg-white text-slate-900 px-10 py-4 font-bold text-[11px] uppercase tracking-widest rounded-full hover:bg-accent hover:text-white transition-all shadow-xl relative z-10">
+          Enquire Now
+        </button>
       </div>
     </div>
   );

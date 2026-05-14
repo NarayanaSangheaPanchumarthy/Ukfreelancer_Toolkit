@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Download } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Download, Play, Pause, RefreshCw } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from 'recharts';
 
 export default function GoalProductivityCalculator() {
@@ -11,6 +11,30 @@ export default function GoalProductivityCalculator() {
   const [focusQuality, setFocusQuality] = useState('7');
   const [distractions, setDistractions] = useState('3');
   const [completionRate, setCompletionRate] = useState('72');
+
+  // Focus Mode Timer State
+  const [isFocusMode, setIsFocusMode] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(25 * 60);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isFocusMode && timerSeconds > 0) {
+      interval = setInterval(() => {
+        setTimerSeconds((prev) => prev - 1);
+      }, 1000);
+    } else if (timerSeconds === 0) {
+      setIsFocusMode(false);
+      alert('Focus session complete!');
+      setTimerSeconds(25 * 60);
+    }
+    return () => clearInterval(interval);
+  }, [isFocusMode, timerSeconds]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   const today = new Date('2026-05-12');
   const d = new Date(deadline);
@@ -43,101 +67,121 @@ export default function GoalProductivityCalculator() {
   const handleDownload = () => window.print();
 
   return (
-    <div className="bg-[#f5f7f9] min-h-screen py-12 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+    <div className="bg-[#fcfdfd] min-h-screen py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
           <div>
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">
-              EXECUTION PLAN
+            <div className="text-[11px] font-bold text-accent uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+              <span className="w-8 h-[1px] bg-accent/30"></span>
+              EXECUTION DYNAMICS
             </div>
-            <h1 className="text-4xl md:text-6xl font-serif text-slate-900 mb-4 tracking-tight">
-              Goal & Productivity<br />Calculator
+            <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.95]">
+              Goal & <span className="italic text-accent">Productivity</span> Synthesis.
             </h1>
-            <p className="text-slate-600 text-lg max-w-2xl">
-              Turn a target into daily and weekly milestones, then score focus quality, distractions, and completion rate.
+            <p className="text-slate-500 text-xl font-light max-w-2xl leading-relaxed">
+              Deconstruct objectives into precise daily target vectors, then evaluate focus integrity and systemic output markers.
             </p>
           </div>
           <button 
             onClick={handleDownload}
-            className="mt-6 md:mt-0 flex items-center bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors"
+            className="group bg-slate-900 text-white px-10 py-5 font-bold text-[11px] uppercase tracking-[0.2em] rounded-2xl hover:bg-accent transition-all shadow-2xl flex items-center gap-3"
           >
-            <Download className="w-4 h-4 mr-2" />
-            Download summary
+            <Download className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+            Export Insights
           </button>
         </div>
 
         {/* Content Grid */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-12">
           
           {/* Left Column - Inputs */}
-          <div className="w-full lg:w-1/3 space-y-6">
-            <div className="border border-slate-200 bg-transparent p-6 space-y-6">
+          <div className="w-full lg:w-[400px] space-y-10">
+            <div className="bg-white border border-slate-100 p-10 rounded-[2.5rem] shadow-xl space-y-8">
+              <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-50 pb-4">Focus Mode</div>
+              <div className="flex flex-col items-center gap-4">
+                <div className="text-6xl font-mono font-light tracking-tighter text-slate-900">{formatTime(timerSeconds)}</div>
+                <div className="flex gap-4">
+                  <button onClick={() => setIsFocusMode(!isFocusMode)} className="p-4 bg-slate-100 rounded-full hover:bg-accent hover:text-white transition-colors">
+                    {isFocusMode ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+                  </button>
+                  <button onClick={() => { setIsFocusMode(false); setTimerSeconds(25 * 60); }} className="p-4 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                    <RefreshCw className="w-6 h-6" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-100 p-10 rounded-[2.5rem] shadow-xl space-y-8">
+              <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-50 pb-4">Calibration Interface</div>
               
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  GOAL NAME
+              <div className="space-y-6">
+              <div className="space-y-3">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                  OBJECTIVE DESIGNATION
                 </label>
                 <input 
                   type="text"
                   value={goalName}
                   onChange={(e) => setGoalName(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
+                  className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  DEADLINE
+              <div className="space-y-3">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                  TEMPORAL DEADLINE
                 </label>
                 <input 
                   type="date"
                   value={deadline}
                   onChange={(e) => setDeadline(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
+                  className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  TARGET UNITS
-                </label>
-                <input 
-                  type="number"
-                  value={targetUnits}
-                  onChange={(e) => setTargetUnits(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
-                />
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                    TARGET UNITS
+                  </label>
+                  <input 
+                    type="number"
+                    value={targetUnits}
+                    onChange={(e) => setTargetUnits(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                    PROGRESS
+                  </label>
+                  <input 
+                    type="number"
+                    value={currentProgress}
+                    onChange={(e) => setCurrentProgress(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  CURRENT PROGRESS
-                </label>
-                <input 
-                  type="number"
-                  value={currentProgress}
-                  onChange={(e) => setCurrentProgress(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  WEEKLY FOCUS HOURS
+              <div className="space-y-3">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                  WEEKLY FOCUS QUOTA (HRS)
                 </label>
                 <input 
                   type="number"
                   value={weeklyFocusHours}
                   onChange={(e) => setWeeklyFocusHours(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
+                  className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  FOCUS QUALITY /10
+              <div className="space-y-3">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                  FOCUS INTENSITY /10
                 </label>
                 <input 
                   type="number"
@@ -145,25 +189,25 @@ export default function GoalProductivityCalculator() {
                   min="0"
                   value={focusQuality}
                   onChange={(e) => setFocusQuality(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
+                  className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  DISTRACTIONS PER DAY
+              <div className="space-y-3">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                  DIURNAL DISRUPTIONS
                 </label>
                 <input 
                   type="number"
                   value={distractions}
                   onChange={(e) => setDistractions(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
+                  className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">
-                  COMPLETION RATE %
+              <div className="space-y-3">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] ml-1">
+                  COMPLETION VELOCITY %
                 </label>
                 <input 
                   type="number"
@@ -171,83 +215,114 @@ export default function GoalProductivityCalculator() {
                   min="0"
                   value={completionRate}
                   onChange={(e) => setCompletionRate(e.target.value)}
-                  className="w-full border border-slate-300 bg-white p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm font-medium"
+                  className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm"
                 />
+              </div>
               </div>
             </div>
           </div>
 
           {/* Right Column - Summary */}
-          <div className="w-full lg:w-2/3">
-            <div className="bg-white border border-slate-200 p-8 shadow-sm print:shadow-none print:p-0">
-              <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">
-                GOAL SUMMARY
+          <div className="flex-1">
+            <div className="bg-white border border-slate-100 p-12 md:p-16 rounded-[4rem] shadow-2xl print:shadow-none print:p-0 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full -translate-y-48 translate-x-48 blur-3xl group-hover:bg-accent/10 transition-all duration-1000"></div>
+              
+              <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 relative z-10 flex items-center gap-3">
+                PROJECTED METRICS
+                <span className="w-12 h-[1px] bg-accent/20"></span>
               </div>
-              <h2 className="text-4xl font-serif text-slate-900 mb-8 tracking-tight">
-                {goalName || 'Unnamed goal'}
+              <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-12 tracking-tight italic relative z-10">
+                {goalName || 'Undefined Objective'}
               </h2>
 
-              <div className="grid grid-cols-2 border border-slate-200 mb-0">
-                <div className="p-6 border-b border-r border-slate-200">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DAYS LEFT</div>
-                  <div className="text-4xl font-bold font-serif text-slate-900 tracking-tight">{daysLeft}</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 relative z-10">
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Temporal Buffer</div>
+                  <div className="text-5xl font-serif text-slate-900 tracking-tighter italic">{daysLeft} <span className="text-lg text-slate-400 not-italic uppercase tracking-widest">Days</span></div>
                 </div>
-                <div className="p-6 border-b border-slate-200">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DAILY TARGET</div>
-                  <div className="text-4xl font-bold font-serif text-slate-900 tracking-tight">{dailyTarget.toFixed(1)}</div>
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Diurnal Vector</div>
+                  <div className="text-5xl font-serif text-slate-900 tracking-tighter italic">{dailyTarget.toFixed(1)} <span className="text-lg text-slate-400 not-italic uppercase tracking-widest">Units</span></div>
                 </div>
-                <div className="p-6 border-r border-slate-200">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">WEEKLY TARGET</div>
-                  <div className="text-4xl font-bold font-serif text-slate-900 tracking-tight">{weeklyTarget.toFixed(1)}</div>
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Septenary Load</div>
+                  <div className="text-5xl font-serif text-slate-900 tracking-tighter italic">{weeklyTarget.toFixed(1)} <span className="text-lg text-slate-400 not-italic uppercase tracking-widest">Units</span></div>
                 </div>
-                <div className="p-6">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PRODUCTIVITY SCORE</div>
-                  <div className={`text-4xl font-bold font-serif tracking-tight ${productivityScore < 65 ? 'text-red-700' : 'text-slate-900'}`}>
-                    {productivityScore}/100
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Integrity Rating</div>
+                  <div className={`text-5xl font-serif tracking-tighter italic ${productivityScore < 65 ? 'text-accent' : 'text-slate-900'}`}>
+                    {productivityScore}<span className="text-lg text-slate-400 not-italic uppercase tracking-widest ml-1">/100</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[#1a1f24] p-6 mb-8 mt-0">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
-                  EFFECTIVE WEEKLY FOCUS TIME
+              <div className="bg-slate-900 p-10 rounded-[3rem] mb-12 relative overflow-hidden group/focus">
+                <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover/focus:opacity-100 transition-opacity"></div>
+                <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-4 relative z-10 flex items-center gap-3">
+                  EFFECTIVE FOCUS THROUGHPUT
+                  <span className="w-12 h-[1px] bg-accent/40"></span>
                 </div>
-                <div className="text-3xl font-bold font-serif text-white tracking-tight">
-                  {effectiveFocus.toFixed(1)} hrs
+                <div className="text-4xl md:text-5xl font-serif text-white tracking-tighter italic relative z-10">
+                  {effectiveFocus.toFixed(1)} <span className="text-xl not-italic uppercase tracking-widest text-slate-400">Hours / Week</span>
                 </div>
               </div>
 
-              <div className="border border-slate-200 p-8 mb-8 h-[300px]">
+              <div className="bg-white border border-slate-100 p-10 rounded-[3rem] mb-12 h-[400px] shadow-sm">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <BarChart data={chartData} margin={{ top: 20, right: 20, left: -10, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#a67c52" stopOpacity={1} />
+                        <stop offset="100%" stopColor="#a67c52" stopOpacity={0.6} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="8 8" vertical={false} stroke="#f1f5f9" />
                     <XAxis 
                       dataKey="name" 
-                      axisLine={{ stroke: '#94a3b8' }} 
-                      tickLine={true} 
-                      tick={{ fill: '#64748b', fontSize: 12 }} 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600, letterSpacing: '0.1em' }} 
+                      dy={15}
                     />
                     <YAxis 
                       axisLine={false} 
                       tickLine={false} 
-                      tick={{ fill: '#64748b', fontSize: 12 }} 
+                      tick={{ fill: '#94a3b8', fontSize: 10 }} 
                     />
                     <Tooltip 
                       cursor={{fill: '#f8fafc'}}
-                      contentStyle={{ borderRadius: '4px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }}
+                      contentStyle={{ 
+                        borderRadius: '24px', 
+                        border: '1px solid #f1f5f9', 
+                        boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+                        padding: '16px' 
+                      }}
+                      itemStyle={{ color: '#a67c52', fontWeight: 600, fontSize: '12px' }}
                     />
-                    <Bar dataKey="value" fill="#a67c52" maxBarSize={120} />
+                    <Bar 
+                      dataKey="value" 
+                      fill="url(#barGradient)" 
+                      radius={[12, 12, 4, 4]} 
+                      maxBarSize={80} 
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
-              <div>
-                <h3 className="text-xl font-serif text-slate-900 mb-4 tracking-tight border-b border-slate-200 pb-2">
-                  Recommendations
+              <div className="bg-slate-50 p-10 rounded-[3rem] border border-slate-100">
+                <h3 className="text-2xl font-serif text-slate-900 mb-6 tracking-tight italic flex items-center gap-4">
+                  Operational Guidelines
+                  <span className="w-12 h-[1px] bg-accent/20"></span>
                 </h3>
-                <div className="space-y-3 text-slate-600">
-                  <p>Work backwards from the weekly target and block focus sessions before reactive tasks.</p>
-                  <p>If the productivity score is under 65, reduce distractions before increasing hours.</p>
+                <div className="space-y-4 text-slate-500 font-light text-lg leading-relaxed">
+                  <div className="flex gap-4">
+                    <span className="text-accent font-bold">01.</span>
+                    <p>Construct work septenaries around high-intensity focus sessions before initiating reactive protocols.</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <span className="text-accent font-bold">02.</span>
+                    <p>If Integrity Rating descends below 65, neutralize diurnal disruptions before expanding session quotas.</p>
+                  </div>
                 </div>
               </div>
 

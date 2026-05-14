@@ -48,6 +48,7 @@ import CookiePolicyGenerator from './CookiePolicyGenerator';
 import TermsOfServiceGenerator from './TermsOfServiceGenerator';
 import BusinessPlanGenerator from './BusinessPlanGenerator';
 import SearchModal from './SearchModal';
+import ProjectManager from './ProjectManager';
 import ReactGA from 'react-ga4';
 
 const tools = [
@@ -146,8 +147,8 @@ const tools = [
 
 const navItems = [
   'Home', 'Invoices', 'Quotes', 'VAT Calculator', 'Tax Estimator', 'Receipts', 
-  'Templates', 'Planning Tools', 'Startup Toolkit', 'Hiring & Contracts', 
-  'Legal', 'Ops & Growth', 'Product', 'Strategy', 'Business Analyst', 'Project Manager'
+  'Templates', 'Business Analyst', 'Project Manager', 'Strategy', 'Startup Toolkit', 'Hiring & Contracts', 
+  'Legal', 'Ops & Growth', 'Product'
 ];
 
 export default function App() {
@@ -241,20 +242,20 @@ export default function App() {
         tools={tools}
         navItems={navItems}
       />
-      {/* Top Navigation Bar Simulation */}
-      <nav className="bg-white border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between sticky top-0 z-50 print:hidden">
-        <div className="px-8 py-4 xl:py-6 flex-shrink-0 border-b border-slate-100 xl:border-none min-w-[280px]">
+      {/* Top Navigation Bar */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between sticky top-0 z-50 print:hidden shadow-sm">
+        <div className="px-8 py-4 xl:py-5 flex-shrink-0 border-b border-slate-100 xl:border-none min-w-[280px]">
           <div 
-            className="font-serif font-bold text-xl tracking-tight text-slate-900 cursor-pointer" 
+            className="font-display font-bold text-xl tracking-tight text-slate-900 cursor-pointer flex items-center gap-2" 
             onClick={() => setActiveTab('Home')}
           >
-            UK Freelancer Toolkit
-          </div>
-          <div className="text-[10px] text-slate-400 uppercase tracking-widest mt-1 font-sans">
-            Fast Admin Tools
+            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
+              <Rocket className="w-5 h-5 text-white" />
+            </div>
+            <span>UK Freelancer Toolkit</span>
           </div>
         </div>
-        <div className="px-6 py-4 xl:py-6 flex items-center space-x-6 text-[13px] font-semibold text-slate-500 overflow-x-auto w-full xl:w-auto flex-1 whitespace-nowrap scrollbar-hide xl:pr-8">
+        <div className="px-6 py-4 xl:py-5 flex items-center space-x-8 text-[13px] font-medium text-slate-500 overflow-x-auto w-full xl:w-auto flex-1 whitespace-nowrap scrollbar-hide xl:pr-8">
           {navItems.map((item) => (
             <button
               key={item}
@@ -262,21 +263,22 @@ export default function App() {
                 trackButtonClick('Nav Click', item);
                 setActiveTab(item);
               }}
-              className={`inline-block pb-1 transition-colors ${
+              className={`inline-block pb-1 transition-all duration-300 relative group ${
                 activeTab === item
-                  ? 'text-slate-900 border-b-[3px] border-[#a67c52]'
-                  : 'hover:text-slate-900 border-b-[3px] border-transparent'
+                  ? 'text-slate-900 font-bold'
+                  : 'hover:text-slate-900'
               }`}
             >
               {item}
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-accent transition-all duration-300 ${activeTab === item ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
           ))}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="inline-block p-1 text-slate-500 hover:text-slate-900 transition-colors ml-2 shrink-0"
+            className="inline-block p-1.5 bg-slate-50 border border-slate-200 rounded-full text-slate-500 hover:text-slate-900 transition-colors ml-2 shrink-0"
             aria-label="Search"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-4 h-4" />
           </button>
           
           <div className="ml-4 pl-4 border-l border-slate-200 hidden md:flex items-center">
@@ -308,180 +310,92 @@ export default function App() {
         <main className="w-full">
           
           {/* Hero Section */}
-          <div className="relative pt-24 pb-32 mb-20 overflow-hidden bg-gradient-to-b from-[#4facfe] to-[#e0f2fe] border-b border-blue-100">
-            {/* Cloud shapes */}
-            <div className="absolute top-10 left-10 w-48 h-16 bg-white/40 rounded-full blur-xl pointer-events-none"></div>
-            <div className="absolute top-20 right-20 w-64 h-24 bg-white/40 rounded-full blur-2xl pointer-events-none"></div>
-            <div className="absolute bottom-0 left-1/4 w-96 h-32 bg-white/50 rounded-full blur-3xl pointer-events-none"></div>
-
-            {/* Left Side Decoration: Polished Sunset Arch */}
-            <div className="hidden lg:block absolute left-[-4%] xl:left-[2%] top-[5%] bottom-[5%] w-[340px] xl:w-[420px] pointer-events-none z-0 transition-transform duration-700 hover:scale-[1.02]">
-              <div className="relative w-full h-full flex flex-col justify-end items-center group">
-                {/* Glow behind */}
-                <div className="absolute inset-0 bg-fuchsia-500/20 blur-[80px] rounded-full mix-blend-screen transition-opacity duration-700 group-hover:opacity-100 opacity-60"></div>
-                
-                {/* Main Outer Arch Stone */}
-                <div className="absolute bottom-0 w-[85%] h-[95%] bg-gradient-to-br from-[#1c1d29] via-[#0f111a] to-black rounded-t-[200px] rounded-b-2xl border-[1.5px] border-[#383a54] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col items-center justify-end overflow-hidden">
-                   {/* Arch Inner Glow/Bevel */}
-                   <div className="absolute inset-[3px] rounded-t-[190px] rounded-b-[14px] border-[2px] border-white/5 shadow-[inset_0_0_30px_rgba(0,0,0,0.9)] pointer-events-none z-20"></div>
-                   
-                   {/* Left Pillar Segment */}
-                   <div className="absolute left-[12px] bottom-0 w-[18px] top-[180px] bg-gradient-to-r from-black/80 via-white/5 to-black/80 border-l border-r border-[#383a54]/50 z-20"></div>
-                   <div className="absolute left-[34px] bottom-0 w-[12px] top-[180px] bg-gradient-to-r from-black/60 via-white/3 to-black/60 border-r border-[#383a54]/30 z-20"></div>
-                   
-                   {/* Right Pillar Segment */}
-                   <div className="absolute right-[12px] bottom-0 w-[18px] top-[180px] bg-gradient-to-r from-black/80 via-white/5 to-black/80 border-l border-r border-[#383a54]/50 z-20"></div>
-                   <div className="absolute right-[34px] bottom-0 w-[12px] top-[180px] bg-gradient-to-r from-black/60 via-white/3 to-black/60 border-l border-[#383a54]/30 z-20"></div>
-
-                   {/* Portal / Inner Arch */}
-                   <div className="absolute bottom-0 left-[50px] right-[50px] top-[46px] rounded-t-[160px] overflow-hidden shadow-[inset_0_0_40px_rgba(0,0,0,1)] bg-slate-900 z-10 border-t border-[rgba(255,255,255,0.05)]">
-                      
-                      {/* Sunset Sky Background */}
-                      <div className="absolute inset-0 bg-gradient-to-b from-[#10143c] via-[#482073] to-[#f07b99] pointer-events-none"></div>
-                      
-                      {/* Glowing Sun */}
-                      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-0">
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#ff5e8c] rounded-full blur-[45px] opacity-60"></div>
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[#ffe8b5] rounded-full blur-[6px]"></div>
-                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full blur-[1px]"></div>
-                      </div>
-                      
-                      {/* Distant Mountains / Hills */}
-                      <div className="absolute top-[45%] left-0 right-0 bottom-0 pointer-events-none overflow-hidden z-10">
-                         {/* Back Mountains */}
-                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute w-[200%] h-[120%] fill-[#30165a] -left-[40%] top-[0%] opacity-90 drop-shadow-[0_-5px_15px_rgba(255,0,128,0.3)]">
-                            <path d="M0,45 L15,25 L35,40 L55,10 L75,35 L100,20 L100,100 L0,100 Z" />
-                         </svg>
-                         {/* Mid Mountains */}
-                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute w-[200%] h-[120%] fill-[#1f0d3d] -left-[20%] top-[20%] drop-shadow-[0_-5px_10px_rgba(0,0,0,0.5)]">
-                            <path d="M0,35 L20,15 L40,30 L60,10 L80,35 L100,15 L100,100 L0,100 Z" />
-                         </svg>
-                      </div>
-                      
-                      {/* Ambient glow from bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-[#e93e96]/30 to-transparent pointer-events-none z-10"></div>
-
-                      {/* Pink/Magenta fog overlay over the mountains */}
-                      <div className="absolute top-[40%] bottom-[20%] left-0 right-0 bg-gradient-to-b from-transparent via-[#f07b99]/30 to-transparent mix-blend-overlay z-10 blur-xl"></div>
-
-                      {/* Fog near stairs */}
-                      <div className="absolute bottom-[20%] left-0 right-0 h-[20%] bg-[#e93e96]/10 blur-xl z-20 pointer-events-none"></div>
-
-                      {/* Stairs */}
-                      <div className="absolute bottom-0 left-[-20%] right-[-20%] h-[38%] flex flex-col justify-end perspective-1000 z-20">
-                        {[...Array(14)].map((_, i) => {
-                          const widthStr = `${50 + (i * 3.5)}%`;
-                          return (
-                          <div 
-                            key={i} 
-                            className="mx-auto border-t border-t-[#f07b99]/40 border-b border-b-black/90 relative"
-                            style={{
-                              width: widthStr,
-                              height: `${6 + i * 1.5}%`,
-                              background: `linear-gradient(to bottom, #501d6d ${0}%, #1a0e35 ${100}%)`,
-                              transform: `translateY(${i * 1.2}px)`,
-                              boxShadow: 'inset 0 1px 2px rgba(244, 114, 182, 0.4), 0 5px 8px -2px rgba(0, 0, 0, 0.8)',
-                              zIndex: 30 + i
-                            }}
-                          >
-                            {/* Highlight on stair edge */}
-                            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#f9a8d4]/50 to-transparent"></div>
-                            {/* Inner shadow/ambient occlusion */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60"></div>
-                          </div>
-                        )})}
-                      </div>
-
-                      {/* Floor in front of stairs */}
-                      <div className="absolute bottom-[-10px] left-[-10px] right-[-10px] h-[15%] bg-gradient-to-b from-[#1a0e35] via-black to-black z-40 blur-sm"></div>
-
-                      {/* Portal inner top shadow */}
-                      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-black/80 to-transparent z-40 rounded-t-[160px] pointer-events-none"></div>
-                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side Decoration: Colourful floating boxes */}
-            <div className="hidden lg:flex absolute right-[2%] xl:right-[6%] top-[15%] bottom-[15%] w-[240px] flex-col justify-around pointer-events-none z-0 py-4">
-              {/* Project Box */}
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-500 rounded-3xl p-6 shadow-2xl border-4 border-white/50 rotate-[6deg] transform transition-transform duration-500 self-end mr-4">
-                <span className="block text-white font-serif font-black text-3xl tracking-wider drop-shadow-md">Project</span>
-              </div>
-              
-              {/* Business Box */}
-              <div className="bg-gradient-to-br from-blue-400 to-teal-400 rounded-3xl p-6 shadow-2xl border-4 border-white/50 -rotate-[4deg] transform transition-transform duration-500 self-start ml-2">
-                <span className="block text-white font-serif font-black text-3xl tracking-wider drop-shadow-md">Business</span>
-              </div>
-              
-              {/* Legal Box */}
-              <div className="bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl p-6 shadow-2xl border-4 border-white/50 rotate-[8deg] transform transition-transform duration-500 self-end mr-8">
-                <span className="block text-white font-serif font-black text-3xl tracking-wider drop-shadow-md">Legal</span>
-              </div>
-            </div>
+          <div className="relative pt-32 pb-40 mb-20 overflow-hidden bg-slate-950 border-b border-slate-800">
+            {/* Background elements */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
             
-            <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10 flex flex-col md:flex-row items-center gap-12 lg:gap-8">
-              <div className="flex-1 max-w-2xl">
-                <div className="flex items-center text-white text-[11px] font-bold uppercase tracking-widest mb-6 bg-blue-500/20 px-3 py-1.5 rounded-full w-fit">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-16">
+              <div className="flex-1 max-w-3xl text-center lg:text-left">
+                <div className="inline-flex items-center text-accent text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-accent/10 border border-accent/20 px-4 py-2 rounded-full">
                   <Sparkles className="w-3.5 h-3.5 mr-2" />
-                  UK-Specific Freelancer Admin
+                  Premium Toolkit for UK Professionals
                 </div>
                 
-                <h1 className="text-5xl md:text-[64px] font-serif text-white leading-[1.05] tracking-tight mb-8 drop-shadow-md">
-                  Invoices, quotes, <br className="hidden md:block" />
-                  VAT and tax <br className="hidden md:block" />
-                  estimates without <br className="hidden md:block" />
-                  accounting <br className="hidden md:block" />
-                  software.
+                <h1 className="text-5xl md:text-7xl font-serif text-white leading-[1.05] tracking-tight mb-8">
+                  Focus on your work.<br className="hidden md:block" />
+                  We'll handle the <span className="text-accent italic">boring stuff</span>.
                 </h1>
                 
-                <p className="text-white/90 text-lg mb-10 max-w-xl leading-relaxed font-medium">
-                  A fast, clean toolkit for UK freelancers who need to open a tool, enter details, download or copy the result, and move on.
+                <p className="text-slate-400 text-xl mb-12 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+                  Professional grade invoices, quotes, and financial planning tools designed for the modern UK independent. Zero bloat, maximum efficiency.
                 </p>
                 
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap justify-center lg:justify-start items-center gap-5">
                   <button 
                     onClick={() => { trackButtonClick('Hero Action', 'Create VAT invoice'); setActiveTab('Invoices'); }}
-                    className="bg-white text-blue-900 font-bold flex items-center px-6 py-4 hover:bg-slate-50 transition-colors text-sm shadow-lg rounded-lg"
+                    className="bg-accent text-white font-bold flex items-center px-8 py-4 hover:bg-accent-dark transition-all scale-100 hover:scale-105 duration-300 text-sm shadow-xl rounded-xl"
                   >
-                    Create VAT invoice
+                    Get Started Free
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </button>
                   <button 
                     onClick={() => { trackButtonClick('Hero Action', 'Open VAT calculator'); setActiveTab('VAT Calculator'); }}
-                    className="bg-blue-600/30 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-4 hover:bg-blue-600/40 transition-colors text-sm rounded-lg"
+                    className="bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold px-8 py-4 hover:bg-white/10 transition-all text-sm rounded-xl"
                   >
-                    Open VAT calculator
-                  </button>
-                  <button 
-                    onClick={() => { trackButtonClick('Hero Action', 'Create quote'); setActiveTab('Quotes'); }}
-                    className="bg-blue-600/30 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-4 hover:bg-blue-600/40 transition-colors text-sm rounded-lg"
-                  >
-                    Create quote
+                    View All Tools
                   </button>
                 </div>
               </div>
               
-              <div className="flex-1 w-full flex justify-center lg:justify-end relative mr-8 lg:mr-4 hidden md:flex">
-                <div className="relative w-full max-w-[360px]">
-                  {/* Decorative background outline */}
-                  <div className="absolute top-[20%] -bottom-4 -left-12 -right-12 border border-blue-200/50 rounded-2xl z-0 backdrop-blur-sm"></div>
-                  
-                  {/* Back card */}
-                  <div className="absolute top-0 right-0 bottom-0 left-8 bg-blue-50/90 rounded-2xl border border-blue-100 z-10 backdrop-blur-md"></div>
-                  
-                  {/* Main invoice card */}
-                  <div className="relative bg-white border border-slate-100 shadow-2xl rounded-2xl p-8 z-20 w-full aspect-[3/4] flex flex-col items-center">
-                    <div className="text-2xl font-serif text-slate-800 tracking-wide mt-8 mb-auto w-full text-left pl-2">INVOICE</div>
-                    
-                    <div className="w-full text-left pl-2 pb-16">
-                      <div className="text-3xl font-bold text-slate-900 mb-2 font-sans tracking-tight">£1,800.00</div>
-                      <div className="text-[10px] text-slate-400 font-medium tracking-wide">VAT included •</div>
+              <div className="flex-1 w-full flex justify-center lg:justify-end relative hidden lg:flex">
+                <div className="relative w-full max-w-[420px]">
+                  {/* Floating cards for visual interest */}
+                  <div className="absolute -top-12 -left-12 w-48 bg-white p-4 rounded-xl shadow-2xl border border-slate-100 rotate-[-8deg] z-30 animate-float">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center">
+                        <FileText className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <div className="h-2 w-16 bg-slate-100 rounded"></div>
                     </div>
+                    <div className="h-2 w-full bg-slate-100 rounded mb-2"></div>
+                    <div className="h-2 w-[80%] bg-slate-100 rounded"></div>
+                  </div>
+
+                  <div className="absolute -bottom-8 -right-12 w-56 bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-3xl rotate-[4deg] z-30">
+                    <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-2 font-bold">Total Revenue</div>
+                    <div className="text-2xl font-display font-bold text-white">£12,450.00</div>
+                    <div className="mt-3 h-1 w-full bg-slate-800 rounded">
+                      <div className="h-full w-[70%] bg-accent rounded"></div>
+                    </div>
+                  </div>
+
+                  {/* Main mockup card */}
+                  <div className="relative bg-white border border-slate-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] rounded-2xl py-12 px-10 z-20 w-full aspect-[3/4] flex flex-col">
+                    <div className="w-12 h-1 bg-accent mb-12"></div>
+                    <div className="text-4xl font-serif text-slate-800 tracking-tight mb-2">INVOICE</div>
+                    <div className="text-sm text-slate-400 mb-12 font-medium">INV-2026-X42</div>
                     
-                    {/* Yellow badge overlapping */}
-                    <div className="absolute -bottom-6 -right-6 md:-right-12 bg-white text-blue-600 text-sm font-bold px-6 py-4 shadow-xl border border-blue-50 rounded-xl z-30 tracking-tight">
-                      Under 60 seconds for repeat use
+                    <div className="space-y-6 flex-grow">
+                      <div className="flex justify-between items-center border-b border-slate-50 pb-4">
+                        <div className="h-3 w-32 bg-slate-100 rounded"></div>
+                        <div className="h-3 w-16 bg-slate-100 rounded"></div>
+                      </div>
+                      <div className="flex justify-between items-center border-b border-slate-50 pb-4">
+                        <div className="h-3 w-24 bg-slate-100 rounded"></div>
+                        <div className="h-3 w-16 bg-slate-100 rounded"></div>
+                      </div>
+                      <div className="flex justify-between items-center border-b border-slate-50 pb-4">
+                        <div className="h-3 w-40 bg-slate-100 rounded"></div>
+                        <div className="h-3 w-16 bg-slate-100 rounded"></div>
+                      </div>
+                    </div>
+
+                    <div className="pt-8 border-t border-slate-100">
+                      <div className="flex justify-between items-end">
+                        <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Total Amount</div>
+                        <div className="text-3xl font-display font-bold text-slate-900 tracking-tight border-b-2 border-accent/20">£2,400.00</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -489,12 +403,31 @@ export default function App() {
             </div>
           </div>
           
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-16 relative z-30">
+            {/* Stats Overlap */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+              {[
+                { label: 'Active Users', value: '12,000+' },
+                { label: 'Documents Created', value: '850k+' },
+                { label: 'Time Saved', value: '25,000 hrs' },
+                { label: 'User Rating', value: '4.9/5.0' },
+              ].map((stat, i) => (
+                <div key={i} className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 text-center">
+                  <div className="text-2xl font-display font-bold text-slate-900 mb-1">{stat.value}</div>
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
             {/* Section Header */}
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-800 leading-tight">
-                Single-purpose tools for one<br className="hidden md:block" /> freelance workflow.
+            <div className="text-center mb-20 max-w-3xl mx-auto">
+              <div className="inline-block text-accent text-[11px] font-bold uppercase tracking-[0.2em] mb-4">Precision Engineering</div>
+              <h2 className="text-4xl md:text-5xl font-serif tracking-tight text-slate-900 leading-tight mb-6">
+                Single-purpose tools for professionals.
               </h2>
+              <p className="text-slate-500 text-lg font-light leading-relaxed">
+                We believe in tools that do one thing perfectly. No complex enterprise software, just fast, reliable admin for the independent workforce.
+              </p>
             </div>
   
             {/* Grid Label */}
@@ -539,17 +472,17 @@ export default function App() {
                     </span>
                   </div>
                   
-                  <h3 className="font-semibold text-lg mb-2 text-slate-800 leading-tight">
+                  <h3 className="font-bold text-lg mb-2 text-slate-900 tracking-tight group-hover:text-accent transition-colors">
                     {tool.title}
                   </h3>
                   
-                  <p className="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                  <p className="text-slate-500 text-sm mb-6 flex-grow leading-relaxed font-light">
                     {tool.description}
                   </p>
                   
-                  <div className="flex items-center text-sm font-bold text-slate-700 mt-auto group-hover:text-blue-600 transition-colors">
+                  <div className="flex items-center text-[11px] font-bold text-slate-900 uppercase tracking-widest mt-auto group-hover:text-accent transition-colors">
                     {tool.actionText} 
-                    <ArrowRight className="w-4 h-4 ml-2 opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all text-blue-600" />
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               );
@@ -589,6 +522,8 @@ export default function App() {
         <StartupToolkit setActiveTab={setActiveTab} />
       ) : activeTab === 'Business Plan Generator' ? (
         <BusinessPlanGenerator />
+      ) : activeTab === 'Project Manager' ? (
+        <ProjectManager />
       ) : activeTab === 'UK Budget Planner' ? (
         <UKBudgetPlanner />
       ) : activeTab === 'Goal & Productivity Calculator' ? (

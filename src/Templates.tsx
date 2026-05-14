@@ -21,73 +21,93 @@ export default function Templates({ setActiveTab }: TemplatesProps) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 md:px-8 py-12 pt-8">
-      {/* Header */}
-      <div className="mb-12 border-b border-transparent pb-4">
-        <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-3">
-          DOWNLOAD PAGES
+    <div className="bg-[#fcfdfd] min-h-screen py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* Header */}
+        <div className="mb-20">
+          <div className="text-[11px] font-bold text-accent uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+            <span className="w-8 h-[1px] bg-accent/30"></span>
+            STATIC ASSETS
+          </div>
+          <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.95]">
+            Freelancer <span className="italic text-accent">Templates</span> UK.
+          </h1>
+          <p className="text-slate-500 text-xl font-light max-w-2xl leading-relaxed">
+            Download high-fidelity document blueprints for immediate deployment or transition to live synthesis tools for automated logic.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-6xl font-serif text-slate-900 mb-6 tracking-tight leading-[1.1]">
-          Free UK freelancer<br />templates
-        </h1>
-        <p className="text-slate-500 text-sm max-w-xl leading-relaxed">
-          Download clean document templates or move straight into the live generators when you
-          need totals and PDF output.
-        </p>
-      </div>
 
-      {/* Grid container with top and bottom borders that span the full width */}
-      <div className="bg-transparent border-y border-slate-200 mb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3">
-          
-          <div 
-            onClick={() => setSelectedTemplate('vat-invoice')}
-            className="p-8 md:p-10 border-b lg:border-b-0 lg:border-r border-slate-200 cursor-pointer hover:bg-white transition-colors group"
-          >
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">FREE UK VAT INVOICE TEMPLATE</div>
-            <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">Free UK VAT Invoice Template</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Use this template when you are VAT registered and need VAT shown clearly.
-            </p>
-          </div>
+        {/* Grid container */}
+        <div className="bg-white border border-slate-100 rounded-[3rem] shadow-xl overflow-hidden mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+            
+            <div 
+              onClick={() => setSelectedTemplate('vat-invoice')}
+              className="p-12 cursor-pointer hover:bg-slate-50 transition-all group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full -translate-y-12 translate-x-12 blur-2xl group-hover:bg-accent/10 transition-all duration-700"></div>
+              <div className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-4 h-[1px] bg-accent/30"></span>
+                FISCAL EXCISE
+              </div>
+              <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:italic transition-all">UK VAT Invoice Blueprint</h3>
+              <p className="text-slate-500 text-sm leading-relaxed font-light">
+                Required for VAT-registered entities seeking precise excise documentation and deduction clarity.
+              </p>
+            </div>
 
-          <div 
-            onClick={() => setSelectedTemplate('quote')}
-            className="p-8 md:p-10 border-b lg:border-b-0 lg:border-r border-slate-200 cursor-pointer hover:bg-white transition-colors group"
-          >
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">FREELANCE QUOTE GENERATOR UK</div>
-            <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">Free Freelance Quote Template UK</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Use this before work starts to confirm scope, pricing, and validity dates.
-            </p>
-          </div>
+            <div 
+              onClick={() => setSelectedTemplate('quote')}
+              className="p-12 cursor-pointer hover:bg-slate-50 transition-all group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full -translate-y-12 translate-x-12 blur-2xl group-hover:bg-accent/10 transition-all duration-700"></div>
+              <div className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-4 h-[1px] bg-accent/30"></span>
+                PROPOSAL VECTOR
+              </div>
+              <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:italic transition-all">Freelance Quote Blueprint</h3>
+              <p className="text-slate-500 text-sm leading-relaxed font-light">
+                Formalize scope, pricing vectors, and temporal validity prior to initiation of service protocols.
+              </p>
+            </div>
 
-          <div 
-            onClick={() => setSelectedTemplate('invoice')}
-            className="p-8 md:p-10 cursor-pointer hover:bg-white transition-colors group border-b lg:border-b-0"
-          >
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">SELF-EMPLOYED INVOICE TEMPLATE UK</div>
-            <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">Self-Employed Invoice Template UK</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              A clean invoice template for sole traders and independent UK service providers.
-            </p>
+            <div 
+              onClick={() => setSelectedTemplate('invoice')}
+              className="p-12 cursor-pointer hover:bg-slate-50 transition-all group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full -translate-y-12 translate-x-12 blur-2xl group-hover:bg-accent/10 transition-all duration-700"></div>
+              <div className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-4 h-[1px] bg-accent/30"></span>
+                INDEPENDENT BILLING
+              </div>
+              <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:italic transition-all">Self-Employed Blueprint</h3>
+              <p className="text-slate-500 text-sm leading-relaxed font-light">
+                A high-integrity billing blueprint for sole traders and systemic service providers within the UK.
+              </p>
+            </div>
+            
+            <div 
+              onClick={() => setSelectedTemplate('receipt')}
+              className="p-12 cursor-pointer hover:bg-slate-50 transition-all group relative overflow-hidden md:border-t border-slate-100"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full -translate-y-12 translate-x-12 blur-2xl group-hover:bg-accent/10 transition-all duration-700"></div>
+              <div className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-4 h-[1px] bg-accent/30"></span>
+                VERIFICATION DATA
+              </div>
+              <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:italic transition-all">Receipt Protocol Blueprint</h3>
+               <p className="text-slate-500 text-sm leading-relaxed font-light">
+                Validated proof of capital transfer for client reconciliation and internal audit trails.
+              </p>
+            </div>
+            
           </div>
-          
-          <div 
-            onClick={() => setSelectedTemplate('receipt')}
-            className="p-8 md:p-10 lg:border-t lg:border-r border-slate-200 cursor-pointer hover:bg-white transition-colors group col-span-1"
-          >
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">RECEIPT GENERATOR UK</div>
-            <h3 className="text-2xl font-serif text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">Receipt Template UK</h3>
-             <p className="text-slate-500 text-sm leading-relaxed">
-              Use this after payment to give clients a concise proof of payment.
-            </p>
-          </div>
-          
+        </div>
+        
+        <div className="max-w-4xl mx-auto">
+          <ProFeaturesCTA />
         </div>
       </div>
-      
-      <ProFeaturesCTA />
     </div>
   );
 }

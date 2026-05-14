@@ -100,323 +100,192 @@ ${formData.processorSigner}, ${formData.processorTitle}
   };
 
   return (
-    <div className="bg-[#f5f7f9] min-h-screen py-12 md:py-16">
-      <div className="max-w-4xl mx-auto px-4 md:px-8">
-        <div className="mb-12">
-          <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4 flex items-center">
-            <Lock className="w-3.5 h-3.5 mr-2" />
-            COMPLIANCE & LEGAL
+    <div className="bg-slate-50 min-h-screen py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="mb-20">
+          <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+            <span className="w-8 h-[1px] bg-accent"></span>
+            COMPLIANCE ARCHITECTURE
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-            Data Processing Agreement (DPA)
+          <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.9]">
+            Data Processing <br />
+            <span className="italic text-accent">Agreement</span> (DPA)
           </h1>
-          <p className="text-slate-600 text-lg mb-8 max-w-2xl">
-            Article 28 GDPR-style processor agreement covering subject matter, duration, security, sub-processors, breach notification, audits, and data return / deletion. Add as a schedule to your master service agreement.
+          <p className="text-slate-500 text-xl font-light mb-12 max-w-2xl leading-relaxed">
+            Article 28 GDPR-compliant processor agreement covering subject matter, duration, security architectures, and retrieval protocols.
           </p>
           
           <div className="flex flex-wrap gap-4 print:hidden">
             <button 
               onClick={copyText}
-              className="bg-white border border-slate-300 text-slate-800 px-6 py-3 font-bold text-sm hover:bg-slate-50 transition-colors flex items-center shadow-sm"
+              className="bg-white border border-slate-200 text-slate-800 px-10 py-5 font-bold text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all rounded-2xl shadow-sm flex items-center"
             >
-              <Copy className="w-4 h-4 mr-2" />
-              Copy text
+              <Copy className="w-4 h-4 mr-3" />
+              Copy Plan
             </button>
             <button 
               onClick={downloadPdf}
-              className="bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors flex items-center shadow-sm"
+              className="bg-slate-900 text-white px-10 py-5 font-bold text-[11px] uppercase tracking-widest hover:bg-black transition-all rounded-2xl shadow-xl flex items-center group"
             >
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
+              <Download className="w-4 h-4 mr-3 text-accent group-hover:scale-110 transition-transform" />
+              Export PDF
             </button>
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 p-8 shadow-sm mb-12 print:hidden">
-          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-6">DPA fields</h3>
-          
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONTROLLER NAME</label>
-            <input 
-              type="text" name="controllerName" value={formData.controllerName} onChange={handleChange}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm md:w-1/2"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONTROLLER ADDRESS</label>
-            <textarea 
-              name="controllerAddress" value={formData.controllerAddress} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-none"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PROCESSOR NAME</label>
-            <input 
-              type="text" name="processorName" value={formData.processorName} onChange={handleChange}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm md:w-1/2"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PROCESSOR ADDRESS</label>
-            <textarea 
-              name="processorAddress" value={formData.processorAddress} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-none"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">EFFECTIVE DATE</label>
-            <input 
-              type="date" name="effectiveDate" value={formData.effectiveDate} onChange={handleChange}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm md:w-1/2"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">SUBJECT MATTER</label>
-            <textarea 
-              name="subjectMatter" value={formData.subjectMatter} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DURATION</label>
-            <textarea 
-              name="duration" value={formData.duration} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">NATURE OF PROCESSING</label>
-            <textarea 
-              name="natureOfProcessing" value={formData.natureOfProcessing} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PURPOSE OF PROCESSING</label>
-            <textarea 
-              name="purposeOfProcessing" value={formData.purposeOfProcessing} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CATEGORIES OF PERSONAL DATA</label>
-            <textarea 
-              name="categoriesOfData" value={formData.categoriesOfData} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">DATA SUBJECTS</label>
-            <textarea 
-              name="dataSubjects" value={formData.dataSubjects} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">APPROVED SUB-PROCESSORS</label>
-            <textarea 
-              name="subProcessors" value={formData.subProcessors} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">SECURITY MEASURES</label>
-            <textarea 
-              name="securityMeasures" value={formData.securityMeasures} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">BREACH NOTIFICATION</label>
-            <textarea 
-              name="breachNotification" value={formData.breachNotification} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">INTERNATIONAL TRANSFERS</label>
-            <textarea 
-              name="internationalTransfers" value={formData.internationalTransfers} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">AUDIT RIGHTS</label>
-            <textarea 
-              name="auditRights" value={formData.auditRights} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">RETURN OR DELETION</label>
-            <textarea 
-              name="returnOrDeletion" value={formData.returnOrDeletion} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">GOVERNING LAW</label>
-              <input 
-                type="text" name="governingLaw" value={formData.governingLaw} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONTROLLER SIGNER</label>
-              <input 
-                type="text" name="controllerSigner" value={formData.controllerSigner} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONTROLLER TITLE</label>
-              <input 
-                type="text" name="controllerTitle" value={formData.controllerTitle} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PROCESSOR SIGNER</label>
-              <input 
-                type="text" name="processorSigner" value={formData.processorSigner} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-            </div>
-          </div>
-
-          <div className="md:w-1/2 pr-3">
-             <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PROCESSOR TITLE</label>
-              <input 
-                type="text" name="processorTitle" value={formData.processorTitle} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-              />
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-slate-600 font-medium mb-4 print:hidden">DPA preview</h3>
-          
-          <div className="bg-white border border-slate-200 p-10 md:p-12 shadow-sm print:shadow-none print:border-none print:p-0">
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">DATA PROCESSING AGREEMENT</div>
-            <h2 className="text-3xl font-serif text-slate-900 mb-4">{formData.controllerName} ↔ {formData.processorName}</h2>
-            <p className="text-sm text-slate-500 mb-8 pb-8">
-              Effective {formData.effectiveDate} · governed by {formData.governingLaw}
-            </p>
-
-            <div className="space-y-6 text-sm text-slate-800 leading-relaxed max-w-3xl">
-              <p>
-                This Agreement supplements the underlying Service Agreement between <strong>{formData.controllerName}</strong> ("Controller") and <strong>{formData.processorName}</strong> ("Processor") and sets out the terms on which the Processor processes personal data on behalf of the Controller in accordance with Article 28 of the UK GDPR.
-              </p>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">1. Subject matter</h4>
-                <p>{formData.subjectMatter}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">2. Duration</h4>
-                <p>{formData.duration}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">3. Nature & purpose of processing</h4>
-                <p>{formData.natureOfProcessing}</p>
-                <p className="mt-2">{formData.purposeOfProcessing}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">4. Categories of personal data</h4>
-                <p>{formData.categoriesOfData}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">5. Data subjects</h4>
-                <p>{formData.dataSubjects}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">6. Sub-processors</h4>
-                <p>
-                  The Controller authorises the use of the following sub-processors: {formData.subProcessors}. The Processor will give the Controller at least 30 days' prior notice of changes and the Controller may object on reasonable grounds.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">7. Security measures</h4>
-                <p>{formData.securityMeasures}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">8. Personal data breach</h4>
-                <p>{formData.breachNotification}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">9. International transfers</h4>
-                <p>{formData.internationalTransfers}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">10. Audit rights</h4>
-                <p>{formData.auditRights}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">11. Return or deletion</h4>
-                <p>{formData.returnOrDeletion}</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">12. Governing law</h4>
-                <p>This Agreement is governed by the laws of {formData.governingLaw}.</p>
-              </div>
-
-              <div className="pt-8 mt-8 border-t border-slate-200">
-                 <h4 className="font-semibold text-slate-900 mb-4 text-base">Annex A — Processing details</h4>
-                 <p className="mb-2"><strong className="text-slate-900">Subject matter:</strong> {formData.subjectMatter}</p>
-                 <p className="mb-2"><strong className="text-slate-900">Duration:</strong> {formData.duration}</p>
-                 <p className="mb-2"><strong className="text-slate-900">Nature & purpose:</strong> {formData.natureOfProcessing} {formData.purposeOfProcessing}</p>
-                 <p className="mb-2"><strong className="text-slate-900">Data categories:</strong> {formData.categoriesOfData}</p>
-                 <p className="mb-2"><strong className="text-slate-900">Data subjects:</strong> {formData.dataSubjects}</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-12 pt-12 mt-12 mb-8">
-                <div>
-                   <h5 className="font-semibold text-slate-900 mb-4 text-sm border-b border-slate-900 pb-2 border-solid w-full">Signed for {formData.controllerName}</h5>
-                   <p className="text-sm mt-2">{formData.controllerSigner}, {formData.controllerTitle}</p>
+        <div className="flex flex-col lg:flex-row gap-12 items-start mb-20">
+          {/* Inputs */}
+          <div className="w-full lg:w-1/2 space-y-8 print:hidden">
+            <div className="bg-white border border-slate-100 p-10 rounded-[2.5rem] shadow-2xl">
+              <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-10 text-center">Module Configuration</h3>
+              
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Controller Entity</label>
+                  <input 
+                    type="text" name="controllerName" value={formData.controllerName} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
                 </div>
-                <div>
-                   <h5 className="font-semibold text-slate-900 mb-4 text-sm border-b border-slate-900 pb-2 border-solid w-full">Signed for {formData.processorName}</h5>
-                   <p className="text-sm mt-2">{formData.processorSigner}, {formData.processorTitle}</p>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Controller Location</label>
+                  <textarea 
+                    name="controllerAddress" value={formData.controllerAddress} onChange={handleChange} rows={2}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-none"
+                  />
                 </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Processor Entity</label>
+                  <input 
+                    type="text" name="processorName" value={formData.processorName} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Processor Location</label>
+                  <textarea 
+                    name="processorAddress" value={formData.processorAddress} onChange={handleChange} rows={2}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-none"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Active Timestamp</label>
+                  <input 
+                    type="date" name="effectiveDate" value={formData.effectiveDate} onChange={handleChange}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Scope of Retrieval</label>
+                  <textarea 
+                    name="subjectMatter" value={formData.subjectMatter} onChange={handleChange} rows={2}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-y"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Security Architecture</label>
+                  <textarea 
+                    name="securityMeasures" value={formData.securityMeasures} onChange={handleChange} rows={2}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-y"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Processor Signer</label>
+                    <input 
+                      type="text" name="processorSigner" value={formData.processorSigner} onChange={handleChange}
+                      className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Processor Title</label>
+                    <input 
+                      type="text" name="processorTitle" value={formData.processorTitle} onChange={handleChange}
+                      className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Preview */}
+          <div className="flex-1 w-full relative">
+            <div className="lg:sticky lg:top-32 bg-white border border-slate-100 p-12 md:p-20 rounded-[3rem] shadow-2xl relative overflow-hidden print:shadow-none print:border-none print:p-0">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32"></div>
+              
+              <div className="flex justify-between items-start mb-20 relative z-10">
+                <div>
+                  <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 flex items-center">
+                    <Lock className="w-3.5 h-3.5 mr-2" />
+                    PROTOCOL ARTICLE 28
+                  </div>
+                  <h2 className="text-4xl font-serif text-slate-900 mb-2 tracking-tight line-clamp-1">{formData.controllerName}</h2>
+                  <div className="text-accent text-lg font-serif italic">↔ {formData.processorName}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">LAST MODIFIED</div>
+                  <div className="text-slate-900 font-medium font-mono text-xs">{formData.effectiveDate}</div>
+                </div>
+              </div>
+
+              <div className="space-y-12 text-slate-600 font-light leading-relaxed relative z-10">
+                <section>
+                  <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">01 foundational basis</h4>
+                  <p className="text-sm">
+                    This Agreement supplements the underlying Service Agreement between <span className="font-bold text-slate-900">{formData.controllerName}</span> ("Controller") and <span className="font-bold text-slate-900">{formData.processorName}</span> ("Processor") and sets out the terms on which the Processor processes personal data in accordance with Article 28 of the UK GDPR.
+                  </p>
+                </section>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <section>
+                    <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">02 retrieval scope</h4>
+                    <p className="text-xs italic border-l border-accent/20 pl-4">{formData.subjectMatter}</p>
+                  </section>
+                  <section>
+                    <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">03 security architecture</h4>
+                    <p className="text-xs">{formData.securityMeasures}</p>
+                  </section>
+                </div>
+
+                <section className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                  <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">04 sub-processors</h4>
+                  <p className="text-xs mb-4">{formData.subProcessors}</p>
+                  <p className="text-[10px] text-slate-400 font-serif italic">Processor will provide 30 days notice for changes.</p>
+                </section>
+
+                <section className="pt-8 border-t border-slate-100">
+                  <div className="flex justify-between items-end gap-12">
+                    <div className="flex-1 border-b border-slate-900 pb-2">
+                       <div className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] mb-2">{formData.controllerName} signer</div>
+                       <p className="text-slate-400 font-serif italic">Pending Signature</p>
+                    </div>
+                    <div className="flex-1 border-b border-slate-900 pb-2">
+                       <div className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] mb-2">{formData.processorName} signer</div>
+                       <p className="text-slate-900 font-serif italic">{formData.processorSigner}</p>
+                    </div>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
         </div>
         
-        <div className="mt-16 print:hidden">
+        <div className="mt-20 print:hidden text-center bg-white border border-slate-100 p-16 rounded-[3rem] shadow-sm">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-4xl font-serif text-slate-900 mb-6 tracking-tight">Technical Compliance Protocols</h2>
+            <p className="text-slate-500 text-lg font-light leading-relaxed mb-12">
+              Our DPA architecture is designed for modern SaaS companies who need rigorous Article 28 compliance without the friction of manual drafting.
+            </p>
             <ProFeaturesCTA />
+          </div>
         </div>
       </div>
     </div>

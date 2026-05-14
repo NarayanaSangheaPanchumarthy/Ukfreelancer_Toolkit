@@ -28,64 +28,79 @@ export default function TemplateDetails({ template, setActiveTab, onBack }: Temp
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 pt-8">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6 pb-6 border-b border-slate-200">
-        <div>
+    <div className="bg-[#fcfdfd] min-h-screen py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-12 pb-12 border-b border-slate-100">
+          <div>
+            <button 
+              onClick={onBack}
+              className="text-[10px] font-bold text-accent uppercase tracking-widest mb-8 flex items-center gap-2 hover:opacity-70 transition-opacity"
+            >
+              <span className="w-6 h-[1px] bg-accent/30"></span>
+              Back to blueprints
+            </button>
+            <div className="text-[11px] font-bold text-accent uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+              <span className="w-8 h-[1px] bg-accent/30"></span>
+              {template.tag}
+            </div>
+            <h1 className="text-5xl md:text-7xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.95]">
+              {template.title.split(' ').map((word, i) => i === template.title.split(' ').length - 1 ? <span key={i} className="italic text-accent">{word}</span> : word + ' ')}
+            </h1>
+            <p className="text-slate-500 text-xl font-light max-w-2xl leading-relaxed">
+              {template.description}
+            </p>
+          </div>
           <button 
-            onClick={onBack}
-            className="text-sm font-bold text-slate-500 hover:text-slate-800 mb-6 flex items-center transition-colors"
+            onClick={handleDownload}
+            disabled={isGeneratingPdf}
+            className="group bg-slate-900 text-white px-10 py-5 font-bold text-[11px] uppercase tracking-[0.2em] rounded-2xl hover:bg-accent transition-all shadow-2xl flex items-center gap-3 shrink-0 disabled:opacity-70"
           >
-            ← Back to templates
-          </button>
-          <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-3">
-            {template.tag}
-          </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-            {template.title}
-          </h1>
-          <p className="text-slate-500 text-sm max-w-xl">
-            {template.description}
-          </p>
-        </div>
-        <button 
-          onClick={handleDownload}
-          disabled={isGeneratingPdf}
-          className="bg-[#1a1f24] text-white font-bold flex items-center px-6 py-3 border border-[#1a1f24] hover:bg-black transition-colors text-sm shadow-sm disabled:opacity-70 disabled:cursor-not-allowed mt-4 md:mt-0"
-        >
-          {isGeneratingPdf ? (
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-          ) : (
-            <Download className="w-4 h-4 mr-2" />
-          )}
-          {isGeneratingPdf ? 'Generating PDF...' : 'Download PDF'}
-        </button>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8 items-start mb-20">
-        {/* Left Column: Info */}
-        <div className="w-full lg:w-[400px] flex-shrink-0 bg-white border border-slate-200 p-8 md:p-10 shadow-sm print:hidden">
-          <h2 className="text-3xl font-serif text-slate-900 mb-6">When to use it</h2>
-          <p className="text-slate-600 text-sm mb-10 leading-relaxed">
-            {template.whenToUse}
-          </p>
-          <button
-            onClick={() => setActiveTab(template.liveTool)}
-            className="w-full bg-slate-50 border border-slate-200 text-slate-900 font-bold px-6 py-4 text-sm hover:bg-slate-100 transition-colors"
-          >
-            Use live {template.liveToolName}
+            {isGeneratingPdf ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Download className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+            )}
+            {isGeneratingPdf ? 'Synthesizing...' : 'Export Blueprint'}
           </button>
         </div>
 
-        {/* Right Column: Preview */}
-        <div className="flex-1 w-full bg-slate-200/50 p-6 md:p-10 border border-slate-200 print:p-0 print:border-none print:bg-white overflow-x-auto">
-          <div id="template-preview" className="bg-white p-8 md:p-12 shadow-sm min-h-[842px] border border-slate-200 print:shadow-none print:border-none print:min-h-0 print:p-0 min-w-[600px]">
-             {template.previewContent}
+        <div className="flex flex-col lg:flex-row gap-16 items-start mb-24">
+          {/* Left Column: Info */}
+          <div className="w-full lg:w-[450px] flex-shrink-0 bg-white border border-slate-100 p-12 rounded-[3.5rem] shadow-xl print:hidden relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-accent/5 rounded-full -translate-y-24 translate-x-24 blur-3xl group-hover:bg-accent/10 transition-all duration-1000"></div>
+            
+            <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 relative z-10 flex items-center gap-3">
+              CONTEXT
+              <span className="w-12 h-[1px] bg-accent/20"></span>
+            </div>
+            <h2 className="text-3xl font-serif text-slate-900 mb-8 italic relative z-10">Application Guide</h2>
+            <p className="text-slate-500 text-lg font-light leading-relaxed mb-12 relative z-10">
+              {template.whenToUse}
+            </p>
+            <button
+              onClick={() => setActiveTab(template.liveTool)}
+              className="w-full bg-slate-50 border border-slate-100 text-slate-900 font-bold px-8 py-5 rounded-2xl text-[11px] uppercase tracking-[0.2em] hover:bg-slate-900 hover:text-white transition-all shadow-sm relative z-10"
+            >
+              Transition to Live {template.liveToolName}
+            </button>
+          </div>
+
+          {/* Right Column: Preview */}
+          <div className="flex-1 w-full bg-slate-50 p-6 md:p-16 rounded-[4rem] border border-slate-100 shadow-sm print:p-0 print:border-none print:bg-white overflow-x-auto relative">
+             <div className="absolute top-6 left-16 text-[9px] font-bold text-slate-300 uppercase tracking-widest print:hidden">
+              Blueprint Interface Preview
+            </div>
+            <div id="template-preview" className="bg-white p-12 md:p-24 shadow-2xl min-h-[842px] border border-slate-50 rounded-lg print:shadow-none print:border-none print:min-h-0 print:p-0 min-w-[700px] mt-8">
+               {template.previewContent}
+            </div>
           </div>
         </div>
-      </div>
 
-      <ProFeaturesCTA />
+        <div className="max-w-4xl mx-auto">
+          <ProFeaturesCTA />
+        </div>
+      </div>
     </div>
   );
 }

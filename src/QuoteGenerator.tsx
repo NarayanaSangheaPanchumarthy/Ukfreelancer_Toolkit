@@ -213,479 +213,362 @@ export default function QuoteGenerator() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 pt-8">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-20 pb-40">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6 print:hidden">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-20 gap-8 print:hidden">
         <div>
-          <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-3">
-            BEFORE THE WORK
+          <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+            <span className="w-8 h-[1px] bg-accent"></span>
+            PROPOSAL ENGINE
           </div>
-          <div className="flex flex-col gap-1 mb-6">
-            <label className="block text-[10px] font-bold uppercase tracking-widest text-[#a67c52] mb-1">Form Layout / Template</label>
-            <select
-              value={selectedTemplate}
-              onChange={(e) => setSelectedTemplate(e.target.value as any)}
-              className="bg-white border-2 border-slate-200 text-slate-800 text-sm font-bold px-4 py-2 hover:border-slate-300 transition-colors focus:outline-none focus:border-[#a67c52] rounded-none shadow-sm"
-            >
-              <option value="Simple">Modern Simple</option>
-              <option value="Detailed">Executive Detailed</option>
-              <option value="Legal">Legal (with T&Cs)</option>
-            </select>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-            Quote / Estimate <br /> Generator
+          <h1 className="text-5xl md:text-7xl font-serif text-slate-900 mb-6 tracking-tight leading-[0.9]">
+            Quote <span className="italic text-accent">Studio</span>
           </h1>
-          {showSuccess && (
-            <div className="mb-4 p-2 bg-green-50 border border-green-200 text-green-700 text-xs font-bold rounded animate-fade-in flex items-center">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-              Operation completed successfully!
-            </div>
-          )}
-          <p className="text-slate-500 text-sm max-w-md leading-relaxed">
-            Create a professional quote with line items, VAT treatment, live totals, and PDF export.
+          <p className="text-slate-500 text-lg max-w-md font-light leading-relaxed">
+            Architect professional work estimates with precise breakdowns.
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-4 scale-100 hover:scale-[1.02] transition-transform duration-500">
           <button 
             onClick={handleDownloadPdf}
             disabled={isGeneratingPdf}
-            className="bg-white text-slate-800 font-bold flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 transition-colors text-sm rounded shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
+            className="bg-slate-900 text-white font-bold flex items-center px-10 py-5 hover:bg-black transition-all text-[10px] uppercase tracking-widest disabled:opacity-70 disabled:cursor-not-allowed group shadow-2xl rounded-2xl"
           >
             {isGeneratingPdf ? (
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              <Loader2 className="w-4 h-4 mr-3 animate-spin" />
             ) : (
-              <Download className="w-4 h-4 mr-2" />
+              <Download className="w-4 h-4 mr-3" />
             )}
-            Download PDF
+            {isGeneratingPdf ? 'Processing...' : 'Download PDF'}
           </button>
           <button 
             onClick={handleSaveToDrive}
             disabled={isSaving}
-            className="bg-[#1a1f24] text-white font-bold flex items-center px-6 py-3 border border-[#1a1f24] hover:bg-black transition-colors text-sm shadow-sm rounded disabled:opacity-70 disabled:cursor-not-allowed"
+            className="bg-white text-slate-900 border border-slate-200 font-bold flex items-center px-10 py-5 hover:bg-slate-50 transition-all text-[10px] uppercase tracking-widest shadow-lg rounded-2xl group"
           >
-            <Cloud className="w-4 h-4 mr-2" />
-            {isSaving ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save to Drive'}
+            <Cloud className="w-4 h-4 mr-3 text-accent group-hover:scale-110 transition-transform" />
+            {isSaving ? 'Syncing...' : 'Save to Drive'}
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-16 items-start">
         {/* Left Column: Form */}
-        <div className="w-full lg:w-[500px] flex-shrink-0 space-y-8 print:hidden">
+        <div className="w-full lg:w-[500px] flex-shrink-0 space-y-12 print:hidden">
+          
+          {/* Template Selection */}
+          <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+            <h2 className="text-xl font-serif text-slate-900 mb-8 flex items-center gap-3">
+              <span className="w-2 h-2 bg-accent rounded-full"></span>
+              Layout Protocol
+            </h2>
+            <div className="grid grid-cols-3 gap-3">
+              {(['Simple', 'Detailed', 'Legal'] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setSelectedTemplate(t)}
+                  className={`py-4 text-[10px] font-bold tracking-widest uppercase transition-all rounded-2xl ${
+                    selectedTemplate === t 
+                      ? 'bg-slate-900 text-white shadow-xl scale-105' 
+                      : 'bg-slate-50 text-slate-400 hover:text-slate-900 border border-transparent hover:border-slate-200'
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </section>
+
           {/* Quote Details */}
-          <section>
-            <h2 className="text-lg font-serif text-slate-800 mb-4 border-b border-slate-200 pb-2">Quote details</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Quote Number</label>
+          <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+            <h2 className="text-xl font-serif text-slate-900 mb-8 flex items-center gap-3">
+              <span className="w-2 h-2 bg-accent rounded-full"></span>
+              Timeline & Ref
+            </h2>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Reference No.</label>
                 <input
                   type="text"
                   name="quoteNumber"
                   value={quoteDetails.quoteNumber}
                   onChange={handleQuoteChange}
-                  className={`w-full border ${errors.quoteNumber ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none"
                 />
-                {errors.quoteNumber && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.quoteNumber}</p>}
               </div>
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Issue Date</label>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Issue Date</label>
                 <input
                   type="date"
                   name="issueDate"
                   value={quoteDetails.issueDate}
                   onChange={handleQuoteChange}
-                  className={`w-full border ${errors.issueDate ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none"
                 />
-                {errors.issueDate && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.issueDate}</p>}
               </div>
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Valid Until</label>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Valid Until</label>
                 <input
                   type="date"
                   name="dueDate"
                   value={quoteDetails.dueDate}
                   onChange={handleQuoteChange}
-                  className={`w-full border ${errors.dueDate ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none"
                 />
-                {errors.dueDate && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.dueDate}</p>}
               </div>
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Terms</label>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Terms</label>
                 <input
                   type="text"
                   name="paymentTerms"
                   value={quoteDetails.paymentTerms}
                   onChange={handleQuoteChange}
-                  className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none"
                 />
               </div>
             </div>
           </section>
 
           {/* Parties */}
-          <section>
-            <h2 className="text-lg font-serif text-slate-800 mb-4 border-b border-slate-200 pb-2">Parties</h2>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-6">
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Your Business Name</label>
+          <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+            <h2 className="text-xl font-serif text-slate-900 mb-8 flex items-center gap-3">
+              <span className="w-2 h-2 bg-accent rounded-full"></span>
+              Stakeholders
+            </h2>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-8">
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Provider Entity</label>
                 <input
                   type="text"
                   name="businessName"
                   value={parties.businessName}
                   onChange={handlePartiesChange}
-                  className={`w-full border ${errors.businessName ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none"
                 />
-                {errors.businessName && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.businessName}</p>}
               </div>
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Your Email</label>
-                <input
-                  type="email"
-                  name="businessEmail"
-                  value={parties.businessEmail}
-                  onChange={handlePartiesChange}
-                  className={`w-full border ${errors.businessEmail ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
-                />
-                {errors.businessEmail && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.businessEmail}</p>}
-              </div>
-              <div className="col-span-1">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Your Address</label>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Official HQ</label>
                 <textarea
                   name="businessAddress"
                   value={parties.businessAddress}
                   onChange={handlePartiesChange}
-                  rows={3}
-                  className={`w-full border ${errors.businessAddress ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none resize-none`}
-                />
-                {errors.businessAddress && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.businessAddress}</p>}
-              </div>
-              <div className="col-span-1">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">VAT Number</label>
-                <input
-                  type="text"
-                  name="businessVat"
-                  value={parties.businessVat}
-                  onChange={handlePartiesChange}
-                  className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none"
+                  rows={2}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none resize-none"
                 />
               </div>
               
-              <div className="col-span-2 my-2 border-t border-slate-100"></div>
+              <div className="col-span-2 my-2 border-t border-slate-50"></div>
 
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Client Name</label>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Client Entity</label>
                 <input
                   type="text"
                   name="clientName"
                   value={parties.clientName}
                   onChange={handlePartiesChange}
-                  placeholder="e.g. Acme Corp"
-                  className={`w-full border ${errors.clientName ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
-                />
-                {errors.clientName && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.clientName}</p>}
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Client VAT Number</label>
-                <input
-                  type="text"
-                  name="clientVat"
-                  value={parties.clientVat}
-                  onChange={handlePartiesChange}
-                  placeholder="e.g. GB 123 4567 89"
-                  className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none"
                 />
               </div>
-              <div className="col-span-1">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Client Address</label>
+              <div className="space-y-2">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Client Address</label>
                 <textarea
                   name="clientAddress"
                   value={parties.clientAddress}
                   onChange={handlePartiesChange}
-                  rows={3}
-                  placeholder="Street, City, Postcode"
-                  className={`w-full border ${errors.clientAddress ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none resize-none`}
+                  rows={2}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 transition-all outline-none resize-none"
                 />
-                {errors.clientAddress && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.clientAddress}</p>}
               </div>
             </div>
           </section>
 
-          {/* Milestones (Only for Detailed) */}
-          {selectedTemplate === 'Detailed' && (
-            <section>
-              <div className="flex justify-between items-end border-b border-slate-200 pb-2 mb-4">
-                <h2 className="text-lg font-serif text-slate-800">Milestones & Timeline</h2>
-                <button 
-                  onClick={() => setMilestones([...milestones, { id: Date.now().toString(), task: '', timing: '' }])}
-                  className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest flex items-center hover:text-slate-800 transition-colors"
-                >
-                  <Plus className="w-3 h-3 mr-1" /> Add phase
-                </button>
-              </div>
-              <div className="space-y-3">
-                {milestones.map((m) => (
-                  <div key={m.id} className="flex gap-2 items-start">
-                    <div className="flex-grow">
-                      <input
-                        type="text"
-                        value={m.task}
-                        placeholder="Phase or task description"
-                        onChange={(e) => setMilestones(milestones.map(x => x.id === m.id ? { ...x, task: e.target.value } : x))}
-                        className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none"
-                      />
-                    </div>
-                    <div className="w-32">
-                      <input
-                        type="text"
-                        value={m.timing}
-                        placeholder="e.g. Week 1"
-                        onChange={(e) => setMilestones(milestones.map(x => x.id === m.id ? { ...x, timing: e.target.value } : x))}
-                        className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none"
-                      />
-                    </div>
-                    <button 
-                      onClick={() => setMilestones(milestones.filter(x => x.id !== m.id))}
-                      className="p-2 text-slate-400 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
           {/* Line Items */}
-          <section>
-            <div className="flex justify-between items-end border-b border-slate-200 pb-2 mb-4">
-              <h2 className="text-lg font-serif text-slate-800">Line items</h2>
+          <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+            <div className="flex justify-between items-end mb-8">
+              <h2 className="text-xl font-serif text-slate-900 flex items-center gap-3">
+                <span className="w-2 h-2 bg-accent rounded-full"></span>
+                Scope breakdown
+              </h2>
               <button 
                 onClick={addLineItem}
-                className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest flex items-center hover:text-slate-800 transition-colors"
+                className="text-[10px] font-bold text-accent uppercase tracking-widest flex items-center hover:text-slate-900 transition-colors"
               >
-                <Plus className="w-3 h-3 mr-1" /> Add item
+                <Plus className="w-3 h-3 mr-2" /> Add Phase
               </button>
             </div>
             
-            <div className="space-y-3">
-              {lineItems.map((item, index) => (
-                <div key={item.id} className="flex gap-2 items-start">
+            <div className="space-y-4">
+              {lineItems.map((item) => (
+                <div key={item.id} className="flex gap-3 items-start animate-in fade-in slide-in-from-left-4 duration-300">
                   <div className="flex-grow">
                     <input
                       type="text"
                       value={item.description}
-                      placeholder="Service or product description"
+                      placeholder="Service / Product"
                       onChange={(e) => updateLineItem(item.id, 'description', e.target.value)}
-                      className={`w-full border ${errors.lineItems ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 outline-none"
                     />
                   </div>
-                  <div className="w-16">
+                  <div className="w-20">
                     <input
                       type="number"
                       value={item.qty}
-                      placeholder="Qty"
                       onChange={(e) => updateLineItem(item.id, 'qty', Number(e.target.value))}
-                      className={`w-full border ${errors.lineItems ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 outline-none"
                     />
                   </div>
-                  <div className="w-24">
+                  <div className="w-28">
                     <input
                       type="number"
                       value={item.rate}
-                      placeholder="Rate"
                       onChange={(e) => updateLineItem(item.id, 'rate', Number(e.target.value))}
-                      className={`w-full border ${errors.lineItems ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none`}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-sm focus:border-slate-400 outline-none"
                     />
-                  </div>
-                  <div className="w-20 pt-2 text-sm font-bold text-slate-800 text-right pr-2">
-                    £{(item.qty * item.rate).toFixed(2)}
                   </div>
                   <button 
                     onClick={() => removeLineItem(item.id)}
-                    className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                    className="p-3 text-slate-300 hover:text-red-500 transition-all"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               ))}
-              {errors.lineItems && <p className="text-red-500 text-[10px] mt-1 font-bold error-text">{errors.lineItems}</p>}
             </div>
 
-            <div className="mt-8 flex justify-between items-start gap-8">
-              <div className="w-1/2">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">VAT Treatment</label>
-                <select
-                  value={vatTreatment}
-                  onChange={(e) => setVatTreatment(e.target.value)}
-                  className="w-full border border-slate-300 rounded p-2 text-sm bg-white focus:border-slate-500 focus:outline-none"
-                >
-                  <option value="Standard 20%">Standard 20%</option>
-                  <option value="Reduced 5%">Reduced 5%</option>
-                  <option value="Zero 0%">Zero 0%</option>
-                  <option value="No VAT">No VAT</option>
-                </select>
+            <div className="mt-12 bg-slate-900 p-8 rounded-2xl text-sm text-white/60 space-y-4">
+              <div className="flex justify-between">
+                <span>Net Scope</span>
+                <span className="text-white font-mono text-base">£{subtotal.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
               </div>
-
-              <div className="w-1/2 bg-slate-50 border border-slate-200 p-4 rounded text-sm">
-                <div className="flex justify-between mb-2">
-                  <span className="text-slate-600">Subtotal</span>
-                  <span className="font-medium">£{subtotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between mb-3 border-b border-slate-200 pb-2">
-                  <span className="text-slate-600">VAT ({vatTreatment === 'No VAT' ? '£0.00' : vatTreatment})</span>
-                  <span className="font-medium">£{vatAmount.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between font-bold text-slate-900">
-                  <span>Total</span>
-                  <span>£{total.toFixed(2)}</span>
-                </div>
+              <div className="flex justify-between border-b border-white/10 pb-4">
+                <span>Tax Component</span>
+                <span className="text-accent font-mono text-base">£{vatAmount.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div className="flex justify-between font-serif text-xl text-white pt-2">
+                <span>Total Commitment</span>
+                <span className="font-bold">£{total.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
               </div>
             </div>
           </section>
 
-          {/* Payment and notes */}
-          <section>
-            <h2 className="text-lg font-serif text-slate-800 mb-4 border-b border-slate-200 pb-2">Quote details</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Payment Details</label>
+          {/* Legal Terms - Only for Legal Template */}
+          {selectedTemplate === 'Legal' && (
+            <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h2 className="text-xl font-serif text-slate-900 mb-8 flex items-center gap-3">
+                <span className="w-2 h-2 bg-accent rounded-full"></span>
+                Legal Provisions
+              </h2>
+              <div className="space-y-4">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400 underline underline-offset-4 decoration-accent/30">Contractual Clauses</label>
                 <textarea
-                  name="paymentDetails"
-                  value={paymentAndNotes.paymentDetails}
-                  onChange={handlePaymentChange}
-                  rows={3}
-                  className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none resize-none"
+                  value={standardTerms}
+                  onChange={(e) => setStandardTerms(e.target.value)}
+                  rows={8}
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-6 text-sm focus:border-slate-400 transition-all outline-none resize-none leading-relaxed font-light text-slate-600"
+                  placeholder="Enter standard terms and conditions..."
                 />
+                <p className="text-[10px] text-slate-400 italic">These clauses will appear at the base of the proposal document.</p>
               </div>
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Document Notes</label>
-                <textarea
-                  name="notes"
-                  value={paymentAndNotes.notes}
-                  onChange={handlePaymentChange}
-                  rows={2}
-                  className="w-full border border-slate-300 rounded p-2 text-sm focus:border-slate-500 focus:outline-none resize-none"
-                />
-              </div>
-
-              {selectedTemplate === 'Legal' && (
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#a67c52] mb-2 font-serif">Standard Terms & Conditions</label>
-                  <textarea
-                    value={standardTerms}
-                    onChange={(e) => setStandardTerms(e.target.value)}
-                    rows={4}
-                    className="w-full border border-[#a67c52]/30 bg-[#a67c52]/5 rounded p-3 text-sm focus:border-[#a67c52] focus:outline-none resize-none text-slate-800 italic"
-                  />
-                </div>
-              )}
-            </div>
-          </section>
+            </section>
+          )}
         </div>
 
         {/* Right Column: Preview */}
-        <div className="flex-1 w-full lg:sticky lg:top-24 bg-slate-200/50 p-6 md:p-10 border border-slate-200 print:p-0 print:border-none print:bg-white print:static">
-          <div id="quote-preview" className="bg-white p-8 md:p-12 shadow-sm min-h-[842px] border border-slate-200 print:shadow-none print:border-none print:min-h-0 print:p-0">
-            {/* Invoice Header */}
-            <div className="flex justify-between items-start mb-16">
+        <div className="flex-1 w-full lg:sticky lg:top-32 bg-slate-100 rounded-3xl p-10 md:p-16 border border-slate-200 print:p-0 print:border-none print:bg-white print:static">
+          <div id="quote-preview" className="bg-white p-12 md:p-20 shadow-2xl rounded-2xl min-h-[1000px] border border-slate-100 print:shadow-none print:border-none print:min-h-0 print:p-0 relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-accent opacity-[0.03] rounded-full -translate-y-16 translate-x-16"></div>
+            
+            {/* Quote Header */}
+            <div className="flex justify-between items-start mb-24 relative z-10">
               <div>
-                <h1 className="text-3xl font-serif text-slate-900 mb-4 tracking-tight">QUOTE</h1>
-                <div className="text-sm text-slate-600">{quoteDetails.quoteNumber}</div>
+                <div className="text-[10px] font-bold text-accent uppercase tracking-[0.4em] mb-4">Architecture Proposal</div>
+                <h1 className="text-4xl font-serif text-slate-900 mb-6 tracking-tight">PROPOSAL</h1>
+                <div className="flex items-center gap-3">
+                  <span className="w-8 h-[1px] bg-slate-200"></span>
+                  <div className="font-mono text-xs text-slate-400">{quoteDetails.quoteNumber}</div>
+                </div>
               </div>
-              <div className="text-right text-sm text-slate-700">
-                <div className="font-bold text-slate-900 mb-1">{parties.businessName}</div>
+              <div className="text-right text-[13px] text-slate-500 leading-relaxed font-light">
+                <div className="font-bold text-slate-900 mb-3 text-base uppercase">{parties.businessName}</div>
                 <div className="whitespace-pre-wrap">{parties.businessAddress}</div>
-                {parties.businessVat && <div className="mt-1">VAT: {parties.businessVat}</div>}
+                {parties.businessVat && <div className="mt-3 text-slate-400 text-[11px] font-bold tracking-widest uppercase">VAT: {parties.businessVat}</div>}
               </div>
             </div>
 
             {/* Bill To & Details */}
-            <div className="flex justify-between items-start mb-16">
-              <div className="text-sm text-slate-700">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Quote For</div>
-                <div className="font-bold text-slate-900 mb-1">{parties.clientName}</div>
+            <div className="flex justify-between items-start mb-24 relative z-10">
+              <div className="text-[13px] text-slate-500 leading-relaxed font-light">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-300 mb-4">Project Stakeholder</div>
+                <div className="font-bold text-slate-900 mb-2 text-base leading-none">{parties.clientName}</div>
                 <div className="whitespace-pre-wrap">{parties.clientAddress}</div>
-                {parties.clientVat && <div className="mt-1">VAT: {parties.clientVat}</div>}
+                {parties.clientVat && <div className="mt-4 text-[11px] font-bold tracking-widest text-slate-300 uppercase">TAX ID: {parties.clientVat}</div>}
               </div>
-              <div className="text-right text-sm text-slate-700 flex flex-col gap-2">
-                <div className="flex justify-end gap-4"><span className="text-slate-400">Date:</span> {quoteDetails.issueDate}</div>
-                <div className="flex justify-end gap-4"><span className="text-slate-400">Valid Until:</span> {quoteDetails.dueDate}</div>
-                <div className="flex justify-end gap-4 text-slate-500">{quoteDetails.paymentTerms}</div>
+              <div className="text-right text-[13px] text-slate-700 flex flex-col gap-4 font-light">
+                <div className="flex justify-end gap-6 border-b border-slate-50 pb-4"><span className="text-slate-300 uppercase text-[10px] tracking-widest font-bold">Issue</span> <span className="font-medium text-slate-900">{quoteDetails.issueDate}</span></div>
+                <div className="flex justify-end gap-6"><span className="text-slate-300 uppercase text-[10px] tracking-widest font-bold">Expiry</span> <span className="font-medium text-slate-900">{quoteDetails.dueDate}</span></div>
               </div>
             </div>
 
             {/* Table */}
-            <div className="mb-12">
-              <table className="w-full text-sm text-slate-700 printable-table">
+            <div className="mb-24 relative z-10 flex-grow">
+              <table className="w-full text-[14px] text-slate-600">
                 <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="text-left font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans">Description</th>
-                    <th className="text-right font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans w-20">Qty</th>
-                    <th className="text-right font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans w-24">Rate</th>
-                    <th className="text-right font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans w-28">Amount</th>
+                  <tr className="border-b border-slate-100">
+                    <th className="text-left font-bold text-[10px] uppercase tracking-[0.2em] text-slate-300 pb-6">Work Architecture</th>
+                    <th className="text-right font-bold text-[10px] uppercase tracking-[0.2em] text-slate-300 pb-6 w-20">Volume</th>
+                    <th className="text-right font-bold text-[10px] uppercase tracking-[0.2em] text-slate-300 pb-6 w-24">Rate</th>
+                    <th className="text-right font-bold text-[10px] uppercase tracking-[0.2em] text-slate-300 pb-6 w-28">Total</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-50">
                   {lineItems.map((item) => (
-                    <tr key={item.id}>
-                      <td className="py-4">{item.description || '...'}</td>
-                      <td className="py-4 text-right">{item.qty}</td>
-                      <td className="py-4 text-right">£{item.rate.toFixed(2)}</td>
-                      <td className="py-4 text-right">£{(item.qty * item.rate).toFixed(2)}</td>
+                    <tr key={item.id} className="group transition-colors hover:bg-slate-50/50">
+                      <td className="py-8 font-light text-slate-800">{item.description || '...'}</td>
+                      <td className="py-8 text-right font-mono text-[13px]">{item.qty}</td>
+                      <td className="py-8 text-right font-mono text-[13px]">£{item.rate.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
+                      <td className="py-8 text-right font-serif text-base text-slate-900">£{(item.qty * item.rate).toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              {selectedTemplate === 'Detailed' && milestones.length > 0 && (
-                <div className="mt-12 pt-8 border-t border-slate-100 animate-fade-in">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Milestones & Phase Timeline</h3>
-                  <div className="grid grid-cols-1 gap-2">
-                    {milestones.map((m) => (
-                      <div key={m.id} className="flex justify-between items-center py-2 border-b border-slate-50 text-xs">
-                        <span className="text-slate-800 font-medium">{m.task}</span>
-                        <span className="text-slate-500 italic">{m.timing}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Totals */}
-              <div className="flex justify-end mt-6">
-                <div className="w-64 text-sm">
-                  <div className="flex justify-between py-2 text-slate-600">
+              <div className="flex justify-end mt-12 bg-slate-50 p-8 rounded-2xl">
+                <div className="w-72 text-[14px]">
+                  <div className="flex justify-between py-3 text-slate-500">
                     <span>Subtotal</span>
-                    <span>£{subtotal.toFixed(2)}</span>
+                    <span>£{subtotal.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
                   </div>
-                  <div className="flex justify-between py-2 text-slate-600 border-b border-slate-200">
-                    <span>VAT ({vatTreatment})</span>
-                    <span>£{vatAmount.toFixed(2)}</span>
+                  <div className="flex justify-between py-3 text-slate-500 border-b border-slate-200 pb-6 font-medium">
+                    <span>Tax ({vatTreatment})</span>
+                    <span className="text-accent">£{vatAmount.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
                   </div>
-                  <div className="flex justify-between py-4 text-lg font-bold text-slate-900 border-t border-slate-200 mt-2">
-                    <span>Total</span>
-                    <span>£{total.toFixed(2)}</span>
+                  <div className="flex justify-between py-8 text-2xl font-bold text-slate-900 border-t border-slate-200 mt-6 leading-none tracking-tight">
+                    <span>Total Commitment</span>
+                    <span className="font-serif italic">£{total.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Footer / Notes */}
-            <div className="grid grid-cols-2 gap-8 text-sm mt-24">
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Payment Details</div>
-                <div className="whitespace-pre-wrap text-slate-600">{paymentAndNotes.paymentDetails}</div>
+            <div className="text-[13px] pt-16 border-t border-slate-100 relative z-10 grid grid-cols-2 gap-12">
+              <div className="space-y-4">
+                <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-300">Strategy Memo</div>
+                <div className="whitespace-pre-wrap text-slate-600 font-light leading-relaxed italic border-l-2 border-accent/20 pl-6">{paymentAndNotes.notes}</div>
               </div>
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Notes</div>
-                <div className="whitespace-pre-wrap text-slate-600">{paymentAndNotes.notes}</div>
+              <div className="text-right space-y-4">
+                <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-300">Official Clearance</div>
+                <div className="text-slate-400 font-serif italic">Authorized Document</div>
+                <div className="h-[2px] w-32 bg-slate-100 ml-auto mt-8"></div>
               </div>
             </div>
 
+            {/* Legal Terms section for PDF/Preview */}
             {selectedTemplate === 'Legal' && standardTerms && (
-              <div className="mt-12 pt-8 border-t border-slate-100 animate-fade-in">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[#a67c52] mb-3">Terms & Conditions of Service</div>
-                <div className="text-[10px] leading-relaxed text-slate-500 whitespace-pre-wrap italic">
+              <div className="mt-16 pt-16 border-t border-slate-100 relative z-10 animate-in fade-in duration-700">
+                <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent mb-8">Terms & Conditions</div>
+                <div className="whitespace-pre-wrap text-[11px] text-slate-500 font-light leading-loose column-count-2 gap-12">
                   {standardTerms}
                 </div>
               </div>
@@ -694,14 +577,14 @@ export default function QuoteGenerator() {
         </div>
       </div>
 
-      <div className="mt-20 print:hidden">
-        <div className="border-t border-slate-200 pt-10 mb-8 max-w-3xl">
-          <h2 className="text-3xl font-serif text-slate-800 mb-4">UK Quote generator</h2>
-          <p className="text-slate-500 text-sm leading-relaxed">
-            Create professional work estimates or formal quotes before beginning the project. Includes support for VAT breakdowns if you are registered.
+      <div className="mt-20 print:hidden text-center bg-white border border-slate-100 p-16 rounded-[3rem] shadow-sm">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-4xl font-serif text-slate-900 mb-6 tracking-tight">Professional Quote Engine</h2>
+          <p className="text-slate-500 text-lg font-light leading-relaxed mb-12">
+            Perfect for creative professionals, consultants, and limited companies in the UK. Support for VAT, PDF export, and Google Drive syncing included.
           </p>
+          <ProFeaturesCTA />
         </div>
-        <ProFeaturesCTA />
       </div>
     </div>
   );

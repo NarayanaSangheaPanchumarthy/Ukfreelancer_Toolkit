@@ -15,10 +15,13 @@ export default function ConsultationBooking() {
     email: '',
     date: ''
   });
+  const [touched, setTouched] = useState({
+    email: false
+  });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
   };
 
@@ -29,14 +32,38 @@ export default function ConsultationBooking() {
       [name]: value
     }));
 
-    // Clear error when user types
-    if (name === 'email' && errors.email) {
-      setErrors(prev => ({ ...prev, email: '' }));
+    // Perform real-time validation if the field has been touched
+    if (name === 'email' && touched.email) {
+      if (!value) {
+        setErrors(prev => ({ ...prev, email: 'Email is required' }));
+      } else if (!validateEmail(value)) {
+        setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
+      } else {
+        setErrors(prev => ({ ...prev, email: '' }));
+      }
+    }
+  };
+
+  const handleBlur = (name: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }));
+    if (name === 'email') {
+      if (!formData.email) {
+        setErrors(prev => ({ ...prev, email: 'Email is required' }));
+      } else if (!validateEmail(formData.email)) {
+        setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
+      }
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    setTouched({ email: true });
+
+    if (!formData.email) {
+      setErrors(prev => ({ ...prev, email: 'Email is required' }));
+      return;
+    }
 
     if (!validateEmail(formData.email)) {
       setErrors(prev => ({ ...prev, email: 'Please enter a valid email address (e.g. name@example.com)' }));
@@ -113,27 +140,29 @@ export default function ConsultationBooking() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 md:px-8 py-12 pt-8">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-20 pt-16">
       {/* Header */}
-      <div className="mb-12 border-b border-slate-200 pb-12">
-        <div className="flex items-center text-[#a67c52] text-[10px] font-bold uppercase tracking-widest mb-4">
-          <Calendar className="w-3 h-3 mr-2" />
-          APPOINTMENT BOOKING
+      <div className="mb-20">
+        <div className="flex items-center text-accent text-[11px] font-bold uppercase tracking-[0.4em] mb-6 gap-2">
+          <Calendar className="w-4 h-4" />
+          SESSION RESERVATION
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-6 tracking-tight leading-[1.1]">
-          Book a Consultation
+        <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-10 tracking-tighter leading-[0.95]">
+          Request a <span className="italic text-accent">Strategic</span> Session.
         </h1>
-        <p className="text-slate-500 text-base max-w-2xl leading-relaxed">
-          Please fill out the form below with your details and a brief description of what you'd like to discuss.
+        <p className="text-slate-500 text-xl font-light max-w-2xl leading-relaxed">
+          Operational refactoring starts with clarity. Reserve a dedicated consultation to discuss your systemic requirements and architectural goals.
         </p>
       </div>
 
       {/* Form */}
-      <div className="bg-white border border-slate-200 shadow-sm p-8 md:p-10 mb-20">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="firstName" className="block text-sm font-bold text-slate-700">First Name</label>
+      <div className="bg-white border border-slate-100 shadow-2xl rounded-[3.5rem] p-10 md:p-20 mb-32 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32 blur-3xl group-hover:bg-accent/10 transition-all duration-1000"></div>
+        
+        <form onSubmit={handleSubmit} className="space-y-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="space-y-3">
+              <label htmlFor="firstName" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">First Name</label>
               <input 
                 type="text" 
                 id="firstName"
@@ -141,12 +170,12 @@ export default function ConsultationBooking() {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full border border-slate-300 p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm"
                 placeholder="Jane"
               />
             </div>
-            <div className="space-y-2">
-              <label htmlFor="lastName" className="block text-sm font-bold text-slate-700">Last Name</label>
+            <div className="space-y-3">
+              <label htmlFor="lastName" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Last Name</label>
               <input 
                 type="text" 
                 id="lastName"
@@ -154,46 +183,48 @@ export default function ConsultationBooking() {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full border border-slate-300 p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm"
                 placeholder="Doe"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-bold text-slate-700">Email Address</label>
-            <input 
-              type="email" 
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className={`w-full border ${errors.email ? 'border-red-500' : 'border-slate-300'} p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`}
-              placeholder="jane@example.com"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs font-medium mt-1">{errors.email}</p>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="space-y-3">
+              <label htmlFor="email" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+              <input 
+                type="email" 
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={() => handleBlur('email')}
+                required
+                className={`w-full bg-slate-50 border ${errors.email ? 'border-red-200' : 'border-slate-100'} p-5 rounded-2xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm`}
+                placeholder="jane@example.com"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-2 ml-1 italic">{errors.email}</p>
+              )}
+            </div>
+            <div className="space-y-3">
+              <label htmlFor="mobileNumber" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Mobile Number</label>
+              <input 
+                type="tel" 
+                id="mobileNumber"
+                name="mobileNumber"
+                value={formData.mobileNumber}
+                onChange={handleChange}
+                required
+                className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm"
+                placeholder="+44 7700 900077"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="mobileNumber" className="block text-sm font-bold text-slate-700">Mobile Number</label>
-            <input 
-              type="tel" 
-              id="mobileNumber"
-              name="mobileNumber"
-              value={formData.mobileNumber}
-              onChange={handleChange}
-              required
-              className="w-full border border-slate-300 p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-              placeholder="+44 7700 900077"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="date" className="block text-sm font-bold text-slate-700">Preferred Date</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="space-y-3">
+              <label htmlFor="date" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Preferred Date</label>
               <input 
                 type="date" 
                 id="date"
@@ -201,14 +232,14 @@ export default function ConsultationBooking() {
                 value={formData.date}
                 onChange={handleChange}
                 required
-                className={`w-full border ${errors.date ? 'border-red-500' : 'border-slate-300'} p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`}
+                className={`w-full bg-slate-50 border ${errors.date ? 'border-red-200' : 'border-slate-100'} p-5 rounded-2xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm`}
               />
               {errors.date && (
-                <p className="text-red-500 text-xs font-medium mt-1">{errors.date}</p>
+                <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-2 ml-1 italic">{errors.date}</p>
               )}
             </div>
-            <div className="space-y-2">
-              <label htmlFor="time" className="block text-sm font-bold text-slate-700">Preferred Time</label>
+            <div className="space-y-3">
+              <label htmlFor="time" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Preferred Time</label>
               <input 
                 type="time" 
                 id="time"
@@ -216,31 +247,34 @@ export default function ConsultationBooking() {
                 value={formData.time}
                 onChange={handleChange}
                 required
-                className="w-full border border-slate-300 p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="description" className="block text-sm font-bold text-slate-700">Description</label>
+          <div className="space-y-3">
+            <label htmlFor="description" className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Session Intent</label>
             <textarea 
               id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
               required
-              rows={5}
-              className="w-full border border-slate-300 p-3 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-y"
-              placeholder="Please briefly describe what you'd like to discuss in our consultation..."
+              rows={6}
+              className="w-full bg-slate-50 border border-slate-100 p-5 rounded-[2rem] text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all shadow-sm resize-y"
+              placeholder="Please briefly describe the specific operational friction you'd like to address..."
             />
           </div>
 
-          <div className="pt-4">
+          <div className="pt-8">
             <button 
               type="submit"
-              className="w-full md:w-auto bg-[#1a1f24] text-white font-bold px-8 py-4 hover:bg-black transition-colors"
+              className="group w-full md:w-auto bg-slate-900 text-white font-bold px-12 py-6 rounded-2xl hover:bg-accent transition-all text-[11px] uppercase tracking-[0.2em] shadow-2xl relative overflow-hidden"
             >
-              Submit Request
+              <span className="relative z-10 flex items-center justify-center">
+                Submit Reservation
+                <CheckCircle2 className="w-4 h-4 ml-4 group-hover:scale-110 transition-transform" />
+              </span>
             </button>
           </div>
         </form>

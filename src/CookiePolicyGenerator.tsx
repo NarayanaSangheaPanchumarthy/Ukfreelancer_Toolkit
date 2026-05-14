@@ -76,120 +76,130 @@ Questions about cookies: ${formData.email}.
   };
 
   return (
-    <div className="bg-[#f5f7f9] min-h-screen py-12 md:py-16">
-      <div className="max-w-4xl mx-auto px-4 md:px-8">
-        <div className="mb-12">
-          <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4 flex items-center">
-            <Cookie className="w-3.5 h-3.5 mr-2" />
-            COMPLIANCE & LEGAL
+    <div className="bg-slate-50 min-h-screen py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="mb-20">
+          <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+            <span className="w-8 h-[1px] bg-accent"></span>
+            CONSENT ARCHITECTURE
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-            Cookie Policy Generator
+          <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.9]">
+            Cookie <span className="italic text-accent">Policy</span> Engine
           </h1>
-          <p className="text-slate-600 text-lg mb-8 max-w-2xl">
-            List the cookies your site uses by category with purpose and retention. Pair with a banner that captures consent for non-essential cookies under PECR + UK GDPR.
+          <p className="text-slate-500 text-xl font-light mb-12 max-w-2xl leading-relaxed">
+            PECR & UK GDPR-compliant cookie notice covering preference management, retention periods, and categorization for the digital standard.
           </p>
           
           <div className="flex flex-wrap gap-4 print:hidden">
             <button 
               onClick={copyText}
-              className="bg-white border border-slate-300 text-slate-800 px-6 py-3 font-bold text-sm hover:bg-slate-50 transition-colors flex items-center shadow-sm"
+              className="bg-white border border-slate-200 text-slate-800 px-10 py-5 font-bold text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all rounded-2xl shadow-sm flex items-center"
             >
-              <Copy className="w-4 h-4 mr-2" />
-              Copy text
+              <Copy className="w-4 h-4 mr-3" />
+              Copy Plan
             </button>
             <button 
               onClick={downloadPdf}
-              className="bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors flex items-center shadow-sm"
+              className="bg-slate-900 text-white px-10 py-5 font-bold text-[11px] uppercase tracking-widest hover:bg-black transition-all rounded-2xl shadow-xl flex items-center group"
             >
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
+              <Download className="w-4 h-4 mr-3 text-accent group-hover:scale-110 transition-transform" />
+              Export PDF
             </button>
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 p-8 shadow-sm mb-12 print:hidden">
-          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-6">Site details</h3>
+        <div className="bg-white border border-slate-100 p-10 md:p-16 rounded-[3rem] shadow-2xl mb-20 print:hidden overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32"></div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">WEBSITE / BRAND NAME</label>
+          <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-12 text-center relative z-10">Module Configuration</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 relative z-10">
+            <div className="space-y-2">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Brand Identity</label>
               <input 
                 type="text" name="brandName" value={formData.brandName} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
+                className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
               />
             </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">WEBSITE URL</label>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Digital Domain</label>
               <input 
                 type="text" name="websiteUrl" value={formData.websiteUrl} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
+                className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PRIVACY CONTACT EMAIL</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 relative z-10">
+            <div className="space-y-2">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Privacy Channel</label>
               <input 
                 type="text" name="email" value={formData.email} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
+                className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
               />
             </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">EFFECTIVE DATE</label>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Active Timestamp</label>
               <input 
                 type="date" name="effectiveDate" value={formData.effectiveDate} onChange={handleChange}
-                className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
+                className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all"
               />
             </div>
           </div>
 
-          <div className="mb-6">
-            <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">CONSENT MECHANISM</label>
+          <div className="mb-12 relative z-10">
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 ml-1">Consent Mechanism</label>
             <textarea 
               name="consentMechanism" value={formData.consentMechanism} onChange={handleChange} rows={2}
-              className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm resize-y"
+              className="w-full bg-slate-50 border border-slate-100 p-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-white rounded-xl text-sm transition-all resize-none"
             />
           </div>
 
-          <div className="border-t border-slate-200 pt-8 mt-8">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Cookies in use</h3>
+          <div className="border-t border-slate-100 pt-12 relative z-10">
+            <div className="flex justify-between items-center mb-10">
+              <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Inventory Management</h3>
               <button 
                 onClick={addCookie}
-                className="text-slate-900 font-bold text-sm flex items-center border border-slate-300 px-4 py-2 hover:bg-slate-50 transition-colors"
+                className="bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest flex items-center px-6 py-3 hover:bg-black transition-all rounded-xl shadow-lg group"
               >
-                <Plus className="w-4 h-4 mr-2" /> Add cookie
+                <Plus className="w-4 h-4 mr-2 text-accent group-hover:rotate-90 transition-transform" /> Add Token
               </button>
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-4">
               {cookies.map((cookie) => (
-                <div key={cookie.id} className="flex flex-col md:flex-row gap-2">
-                  <input 
-                    type="text" value={cookie.name} onChange={(e) => handleCookieChange(cookie.id, 'name', e.target.value)} 
-                    placeholder="Name (e.g., _ga)"
-                    className="w-full md:w-1/6 border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-                  />
-                  <input 
-                    type="text" value={cookie.category} onChange={(e) => handleCookieChange(cookie.id, 'category', e.target.value)} 
-                    placeholder="Category"
-                    className="w-full md:w-1/5 border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-                  />
-                  <input 
-                    type="text" value={cookie.purpose} onChange={(e) => handleCookieChange(cookie.id, 'purpose', e.target.value)} 
-                    placeholder="Purpose"
-                    className="w-full md:w-[40%] border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-                  />
-                  <input 
-                    type="text" value={cookie.retention} onChange={(e) => handleCookieChange(cookie.id, 'retention', e.target.value)} 
-                    placeholder="Retention"
-                    className="w-full md:w-1/6 border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-sm"
-                  />
+                <div key={cookie.id} className="flex flex-col md:flex-row gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl group/item hover:bg-white hover:border-slate-200 transition-all">
+                  <div className="flex-1 space-y-1">
+                    <label className="block text-[8px] font-bold text-slate-300 uppercase tracking-widest">Token Name</label>
+                    <input 
+                      type="text" value={cookie.name} onChange={(e) => handleCookieChange(cookie.id, 'name', e.target.value)} 
+                      className="w-full bg-transparent border-none p-0 text-slate-900 focus:outline-none text-sm font-medium"
+                    />
+                  </div>
+                  <div className="flex-1 space-y-1 border-l border-slate-200 pl-4">
+                    <label className="block text-[8px] font-bold text-slate-300 uppercase tracking-widest">Classification</label>
+                    <input 
+                      type="text" value={cookie.category} onChange={(e) => handleCookieChange(cookie.id, 'category', e.target.value)} 
+                      className="w-full bg-transparent border-none p-0 text-slate-900 focus:outline-none text-sm"
+                    />
+                  </div>
+                  <div className="flex-[2] space-y-1 border-l border-slate-200 pl-4">
+                    <label className="block text-[8px] font-bold text-slate-300 uppercase tracking-widest">Intent</label>
+                    <input 
+                      type="text" value={cookie.purpose} onChange={(e) => handleCookieChange(cookie.id, 'purpose', e.target.value)} 
+                      className="w-full bg-transparent border-none p-0 text-slate-900 focus:outline-none text-sm"
+                    />
+                  </div>
+                  <div className="flex-1 space-y-1 border-l border-slate-200 pl-4">
+                    <label className="block text-[8px] font-bold text-slate-300 uppercase tracking-widest">Retention</label>
+                    <input 
+                      type="text" value={cookie.retention} onChange={(e) => handleCookieChange(cookie.id, 'retention', e.target.value)} 
+                      className="w-full bg-transparent border-none p-0 text-slate-900 focus:outline-none text-sm"
+                    />
+                  </div>
                   <button 
                     onClick={() => removeCookie(cookie.id)} 
-                    className="p-3 border border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors flex items-center justify-center shrink-0"
+                    className="p-3 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all rounded-xl"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -199,73 +209,89 @@ Questions about cookies: ${formData.email}.
           </div>
         </div>
 
-        <div>
-          <h3 className="text-slate-600 font-medium mb-4 print:hidden">Cookie policy preview</h3>
-          
-          <div className="bg-white border border-slate-200 p-10 md:p-12 shadow-sm print:shadow-none print:border-none print:p-0">
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">COOKIE POLICY</div>
-            <h2 className="text-3xl font-serif text-slate-900 mb-4">{formData.brandName} Cookie Policy</h2>
-            <p className="text-sm text-slate-500 mb-8 border-b border-slate-200 pb-8">
-              Effective {formData.effectiveDate} · {formData.websiteUrl}
-            </p>
-
-            <div className="space-y-6 text-sm text-slate-800 leading-relaxed max-w-3xl">
+        <div className="relative">
+          <div className="lg:sticky lg:top-32 bg-white border border-slate-100 p-12 md:p-20 rounded-[3rem] shadow-2xl overflow-hidden relative print:shadow-none print:border-none print:p-0">
+            <div className="absolute top-0 left-0 w-full h-2 bg-accent/20"></div>
+            
+            <div className="flex justify-between items-start mb-20">
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">1. What cookies are</h4>
-                <p>Cookies are small text files placed on your device that allow a website to recognise you, remember your preferences, and measure how the site is used.</p>
+                <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 flex items-center">
+                  <Cookie className="w-3.5 h-3.5 mr-2" />
+                  CONSENT PROTOCOL
+                </div>
+                <h2 className="text-4xl font-serif text-slate-900 mb-2 tracking-tight">{formData.brandName}</h2>
+                <div className="text-slate-400 font-serif italic text-lg">Cookie Policy</div>
               </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">2. Consent</h4>
-                <p>{formData.consentMechanism}</p>
+              <div className="text-right">
+                <div className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">LAST MODIFIED</div>
+                <div className="text-slate-900 font-medium font-mono text-xs">{formData.effectiveDate}</div>
               </div>
+            </div>
 
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-4 mt-4 text-base">3. Cookies we use</h4>
+            <div className="space-y-12 text-slate-600 font-light leading-relaxed max-w-3xl">
+              <section>
+                <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">01 foundational basis</h4>
+                <p className="text-sm">Cookies are small text files placed on your device that allow a website to recognise you, remember your preferences, and measure how the site is used.</p>
+              </section>
+
+              <section>
+                <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">02 consent architecture</h4>
+                <p className="text-sm italic border-l-2 border-accent/20 pl-6">{formData.consentMechanism}</p>
+              </section>
+
+              <section>
+                <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">03 token inventory</h4>
                 {cookies.length > 0 ? (
-                  <div className="overflow-x-auto border-t border-l border-slate-200">
+                  <div className="overflow-x-auto rounded-2xl border border-slate-100 bg-slate-50/50 mt-6">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="bg-slate-50">
-                          <th className="p-3 border-b border-r border-slate-200 font-semibold text-slate-900 text-xs">Name</th>
-                          <th className="p-3 border-b border-r border-slate-200 font-semibold text-slate-900 text-xs">Category</th>
-                          <th className="p-3 border-b border-r border-slate-200 font-semibold text-slate-900 text-xs">Purpose</th>
-                          <th className="p-3 border-b border-r border-slate-200 font-semibold text-slate-900 text-xs">Retention</th>
+                        <tr>
+                          <th className="p-4 border-b border-slate-100 font-bold text-slate-900 text-[10px] uppercase tracking-widest">Name</th>
+                          <th className="p-4 border-b border-slate-100 font-bold text-slate-900 text-[10px] uppercase tracking-widest">Category</th>
+                          <th className="p-4 border-b border-slate-100 font-bold text-slate-900 text-[10px] uppercase tracking-widest">Purpose</th>
+                          <th className="p-4 border-b border-slate-100 font-bold text-slate-900 text-[10px] uppercase tracking-widest">Retention</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody className="divide-y divide-slate-100">
                         {cookies.map(cookie => (
-                          <tr key={cookie.id} className="text-xs">
-                            <td className="p-3 border-b border-r border-slate-200">{cookie.name}</td>
-                            <td className="p-3 border-b border-r border-slate-200">{cookie.category}</td>
-                            <td className="p-3 border-b border-r border-slate-200">{cookie.purpose}</td>
-                            <td className="p-3 border-b border-r border-slate-200">{cookie.retention}</td>
+                          <tr key={cookie.id} className="text-[11px] text-slate-600">
+                            <td className="p-4 font-mono">{cookie.name}</td>
+                            <td className="p-4">{cookie.category}</td>
+                            <td className="p-4 leading-relaxed">{cookie.purpose}</td>
+                            <td className="p-4">{cookie.retention}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
                 ) : (
-                  <p className="text-slate-500 italic">No cookies defined.</p>
+                  <p className="text-slate-400 italic text-sm">No tokens active in repository.</p>
                 )}
-              </div>
+              </section>
 
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">4. Managing cookies</h4>
-                <p>You can change your consent at any time using the Cookie Settings link in our footer, or by clearing cookies in your browser. Most browsers also allow you to block cookies entirely — note that this may break functionality.</p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2 mt-4 text-base">5. Contact</h4>
-                <p>Questions about cookies: {formData.email}.</p>
-              </div>
-
+              <section className="pt-8 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] mb-4">Jurisdiction</h4>
+                  <p className="text-xs">United Kingdom · PECR · UK GDPR</p>
+                </div>
+                <div className="text-right">
+                  <h4 className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] mb-4">Authorization</h4>
+                  <div className="text-slate-900 font-mono text-[10px] mb-1">{formData.email}</div>
+                  <p className="text-slate-400 font-serif italic text-xs">Verified Engine</p>
+                </div>
+              </section>
             </div>
           </div>
         </div>
         
-        <div className="mt-16 print:hidden">
+        <div className="mt-20 text-center bg-white border border-slate-100 p-16 rounded-[3rem] shadow-sm">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-4xl font-serif text-slate-900 mb-6 tracking-tight">Digital Transparency Standards</h2>
+            <p className="text-slate-500 text-lg font-light leading-relaxed mb-12">
+              Our generators ensure you meet the highest standards of PECR and GDPR compliance with minimal friction.
+            </p>
             <ProFeaturesCTA />
+          </div>
         </div>
       </div>
     </div>

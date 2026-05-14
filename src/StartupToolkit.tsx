@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, FileText, CheckCircle, PieChart, TrendingDown, Calculator, Layout, Shield, Boxes, Plus } from 'lucide-react';
+import { ArrowRight, FileText, CheckCircle, PieChart, TrendingDown, Calculator, Layout, Shield, Boxes, Plus, Sparkles } from 'lucide-react';
 
 interface StartupTool {
   title: string;
@@ -82,93 +82,84 @@ const startupTools: StartupTool[] = [
 
 export default function StartupToolkit({ setActiveTab }: StartupToolkitProps) {
   return (
-    <div className="bg-[#fdfcfb] min-h-screen">
+    <div className="bg-[#fcfdfd] min-h-screen">
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-20 pb-32">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-32 pb-40 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-accent/[0.02] -skew-x-12 translate-x-24 pointer-events-none"></div>
+        <div className="flex flex-col lg:flex-row items-center gap-24 relative z-10">
           <div className="lg:w-3/5">
-            <div className="flex items-center text-[#a67c52] text-[11px] font-bold uppercase tracking-[0.2em] mb-6">
-              <span className="mr-2">✨</span>
-              Startup Toolkit
+            <div className="flex items-center text-accent text-[11px] font-bold uppercase tracking-[0.4em] mb-10">
+              <Sparkles className="w-4 h-4 mr-3 animate-pulse" />
+              NORTHSTAR ENGINE
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-serif text-slate-900 leading-[1.05] tracking-tight mb-8">
-              Turn a business idea into a polished plan you can edit, export, and share.
+            <h1 className="text-6xl md:text-8xl font-serif text-slate-900 leading-[0.9] tracking-tighter mb-10">
+              Architecture for <br />
+              <span className="italic text-accent">Ambitious</span> Founders.
             </h1>
             
-            <p className="text-slate-500 text-lg mb-10 max-w-xl leading-relaxed">
-              A focused toolkit for founders who need structured documents, not blank pages. Start with the business plan generator.
+            <p className="text-slate-500 text-2xl mb-12 max-w-xl font-light leading-relaxed">
+              Eliminate blank-page syndrome with a suite of professional document generators and strategic modeling tools.
             </p>
             
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-6">
               <button 
                 onClick={() => setActiveTab('Business Plan Generator')}
-                className="bg-[#1a1f24] text-white font-bold flex items-center px-8 py-4 hover:bg-black transition-all text-sm rounded shadow-lg"
+                className="bg-slate-900 text-white font-bold flex items-center px-12 py-6 hover:bg-accent transition-all text-[11px] uppercase tracking-[0.2em] rounded-2xl shadow-2xl scale-100 hover:scale-[1.02] active:scale-95 duration-300"
               >
-                Create business plan
-                <ArrowRight className="w-4 h-4 ml-2" />
+                Launch Planner
+                <ArrowRight className="w-4 h-4 ml-3" />
               </button>
               <button 
                 onClick={() => setActiveTab('Start Up Expense Calculator')}
-                className="bg-white text-slate-800 border border-slate-200 font-bold px-8 py-4 hover:border-slate-400 transition-all text-sm rounded shadow-sm"
+                className="bg-white text-slate-900 border border-slate-100 font-bold px-12 py-6 hover:bg-slate-50 transition-all text-[11px] uppercase tracking-[0.2em] rounded-2xl shadow-xl hover:scale-[1.02] active:scale-95 duration-300"
               >
-                Open expense calculator
+                Burn Calculus
               </button>
             </div>
           </div>
           
-          <div className="lg:w-2/5 relative">
-            <div className="relative w-full max-w-[400px] mx-auto h-[360px] right-2 lg:right-6">
-              
-              {/* Back Card (01) */}
-              <div className="absolute top-0 left-[-10px] sm:left-[-20px] w-[300px] h-[210px] bg-[#fdf5f3] border border-[#f8ebe7] shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-sm -rotate-[4deg] z-0">
-                <div className="p-8">
-                  <div className="text-[13px] font-bold text-[#cb9e8e] mb-12 tracking-widest leading-none">01</div>
-                  <div className="text-[44px] font-serif text-[#1c1917] tracking-tight leading-none truncate">Vision</div>
+          <div className="lg:w-2/5 relative hidden lg:block">
+            <div className="relative w-full max-w-[440px] mx-auto h-[400px]">
+              <div className="absolute top-0 -left-12 w-[340px] h-[240px] bg-white border border-slate-50 shadow-2xl rounded-[3rem] -rotate-[6deg] z-0 opacity-40 blur-[1px]"></div>
+              <div className="absolute top-[40px] -right-12 w-[340px] h-[240px] bg-white border border-slate-50 shadow-2xl rounded-[3rem] rotate-[4deg] z-10 opacity-60"></div>
+              <div className="absolute top-[100px] left-0 w-[420px] h-[280px] bg-white border border-slate-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] rounded-[4rem] p-12 z-20 flex flex-col justify-between group overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-[1.5] transition-transform duration-1000"></div>
+                <div className="flex justify-between items-center relative z-10">
+                  <div className="text-[11px] font-bold text-accent tracking-[0.4em] leading-none uppercase">CORE STACK 01</div>
+                  <div className="p-3 rounded-2xl bg-accent/10 flex items-center justify-center">
+                    <Layout className="w-5 h-5 text-accent" />
+                  </div>
+                </div>
+                <div className="space-y-4 relative z-10">
+                   <div className="h-1.5 w-full bg-slate-50 rounded-full"></div>
+                   <div className="h-1.5 w-3/4 bg-slate-50 rounded-full"></div>
+                </div>
+                <div className="text-4xl font-serif text-slate-900 tracking-tight leading-tight relative z-10 italic">
+                  Financial Integrity
                 </div>
               </div>
-              
-              {/* Middle Card (02) */}
-              <div className="absolute top-[40px] right-[-10px] sm:right-[-30px] w-[300px] h-[210px] bg-[#faf0ed] border border-[#f8ebe7] shadow-[0_15px_40px_rgb(0,0,0,0.06)] rounded-sm rotate-[2deg] z-10 transition-transform hover:rotate-3">
-                <div className="p-8">
-                  <div className="text-[13px] font-bold text-[#cb9e8e] mb-12 tracking-widest leading-none">02</div>
-                </div>
-              </div>
-              
-              {/* Front Card (03) */}
-              <div className="absolute top-[120px] left-[10px] sm:left-[20px] w-[330px] h-[210px] bg-[#fdf5f3] border border-[#f5e4df] shadow-[0_20px_50px_-10px_rgb(0,0,0,0.15)] rounded-sm p-8 z-20 flex flex-col justify-between">
-                <div className="text-[13px] font-bold text-[#cb9e8e] tracking-widest leading-none">03</div>
-                {/* Adding the line from the first example to make it polished */}
-                {/* <div className="w-12 h-1 bg-[#cb9e8e]"></div> */}
-                <div className="text-4xl font-serif text-[#1c1917] tracking-tight leading-tight mt-auto">
-                  Financial Outlook
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
       </div>
 
       {/* Directory Section */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pb-32">
-        <div className="max-w-3xl mb-20 text-center lg:text-left">
-          <h2 className="text-3xl md:text-5xl font-serif text-slate-800 leading-[1.2] tracking-tight">
-            Document generators and planning tools for early-stage founders.
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pb-40">
+        <div className="max-w-3xl mb-24">
+          <h2 className="text-4xl md:text-6xl font-serif text-slate-900 leading-[0.95] tracking-tighter italic">
+            Strategic Infrastructure. <br />
+            <span className="text-slate-300 not-italic">Synthesis Toolkit.</span>
           </h2>
         </div>
 
-        <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#a67c52] mb-8 border-b border-slate-100 pb-4">
-          Startup Directory
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-200 border border-slate-200 shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {startupTools.map((tool, index) => {
             const Icon = tool.icon;
             return (
               <div 
                 key={index} 
-                className="bg-white p-8 flex flex-col min-h-[320px] hover:bg-slate-50 transition-all cursor-pointer group"
+                className="bg-white p-12 rounded-[3.5rem] border border-slate-50 flex flex-col min-h-[420px] hover:border-accent/30 hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.08)] transition-all cursor-pointer group relative overflow-hidden"
                 onClick={() => {
                   if (tool.title === 'Startup Business Plan Generator') {
                     setActiveTab('Business Plan Generator');
@@ -177,26 +168,28 @@ export default function StartupToolkit({ setActiveTab }: StartupToolkitProps) {
                   }
                 }}
               >
-                <div className="flex justify-between items-start mb-10">
-                  <div className="text-[#a67c52]">
-                    <Icon className="w-6 h-6 stroke-[1.5]" />
+                <div className="absolute -top-16 -right-16 w-32 h-32 bg-accent/5 rounded-full group-hover:scale-[2.5] transition-transform duration-1000"></div>
+                
+                <div className="flex justify-between items-start mb-12 relative z-10">
+                  <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-sm">
+                    <Icon className="w-7 h-7 stroke-[1.25]" />
                   </div>
-                  <span className="text-[9px] font-bold text-[#a67c52] uppercase tracking-[0.15em]">
+                  <span className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em] group-hover:text-accent transition-colors">
                     {tool.tag}
                   </span>
                 </div>
                 
-                <h3 className="font-serif text-xl mb-4 text-slate-900 group-hover:text-[#a67c52] transition-colors leading-tight">
+                <h3 className="font-serif text-3xl mb-6 text-slate-900 group-hover:text-accent transition-colors leading-[1.1] tracking-tight italic relative z-10">
                   {tool.title}
                 </h3>
                 
-                <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
+                <p className="text-slate-500 text-lg leading-relaxed mb-10 flex-grow font-light relative z-10 opacity-70 group-hover:opacity-100 transition-opacity">
                   {tool.description}
                 </p>
                 
-                <div className="flex items-center text-[11px] font-bold uppercase tracking-widest text-slate-800 group-hover:text-[#a67c52] transition-colors mt-auto">
+                <div className="flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 group-hover:translate-x-3 transition-all relative z-10">
                   {tool.actionText} 
-                  <ArrowRight className="w-3.5 h-3.5 ml-2 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 ml-4 text-accent" />
                 </div>
               </div>
             );

@@ -13,6 +13,7 @@ interface LineItem {
 export default function InvoiceGenerator() {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [invoiceDetails, setInvoiceDetails] = useState({
     invoiceNumber: 'INV-2026-001',
     issueDate: '2026-05-12',
@@ -62,6 +63,14 @@ export default function InvoiceGenerator() {
         delete newErrors[name];
         return newErrors;
       });
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    if (name === 'businessAddress' && !value.trim()) {
+      setErrors(prev => ({ ...prev, businessAddress: 'Required' }));
     }
   };
 
@@ -169,27 +178,29 @@ export default function InvoiceGenerator() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6 print:hidden">
         <div>
-          <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-3">
+          <div className="text-[11px] font-bold text-accent uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+            <span className="w-8 h-[1px] bg-accent"></span>
             FLAGSHIP TOOL
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-            UK VAT Invoice <br /> Generator
+          <h1 className="text-5xl md:text-6xl font-serif text-slate-900 mb-6 tracking-tight leading-[0.95]">
+            UK VAT <br />
+            <span className="italic text-accent">Professional Billing</span>
           </h1>
-          <p className="text-slate-500 text-sm max-w-md leading-relaxed">
-            Create a professional UK VAT invoice with line items, VAT treatment, live totals, and PDF export.
+          <p className="text-slate-500 text-sm max-w-md leading-relaxed font-light">
+            Craft a high-end VAT compliant document with precise calculations and elegant typography.
           </p>
         </div>
         <button 
           onClick={handleDownloadPdf}
           disabled={isGeneratingPdf}
-          className="bg-[#1a1f24] text-white font-bold flex items-center px-6 py-3 border border-[#1a1f24] hover:bg-black transition-colors text-sm shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
+          className="bg-accent text-white font-bold flex items-center px-8 py-4 hover:bg-accent-dark transition-all scale-100 hover:scale-105 duration-300 text-sm shadow-xl rounded-xl disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {isGeneratingPdf ? (
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
           ) : (
             <Download className="w-4 h-4 mr-2" />
           )}
-          {isGeneratingPdf ? 'Generating PDF...' : 'Download PDF'}
+          {isGeneratingPdf ? 'Generating...' : 'Export Invoice'}
         </button>
       </div>
 
@@ -278,6 +289,7 @@ export default function InvoiceGenerator() {
                   name="businessAddress"
                   value={parties.businessAddress}
                   onChange={handlePartiesChange}
+                  onBlur={handleBlur}
                   rows={3}
                   className={`w-full border ${errors.businessAddress ? 'border-red-500' : 'border-slate-300'} rounded p-2 text-sm focus:border-slate-500 focus:outline-none resize-none`}
                 />
@@ -447,75 +459,88 @@ export default function InvoiceGenerator() {
         </div>
 
         {/* Right Column: Preview */}
-        <div className="flex-1 w-full lg:sticky lg:top-24 bg-slate-200/50 p-6 md:p-10 border border-slate-200 print:p-0 print:border-none print:bg-white print:static">
-          <div id="invoice-preview" className="bg-white p-8 md:p-12 shadow-sm min-h-[842px] border border-slate-200 print:shadow-none print:border-none print:min-h-0 print:p-0">
+        <div className="flex-1 w-full lg:sticky lg:top-24 bg-slate-100 p-6 md:p-12 border border-slate-200 shadow-inner rounded-2xl print:p-0 print:border-none print:bg-white print:static">
+          <div id="invoice-preview" className="bg-white p-12 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] min-h-[1123px] border border-slate-100 print:shadow-none print:border-none print:min-h-0 print:p-0 flex flex-col">
             {/* Invoice Header */}
-            <div className="flex justify-between items-start mb-16">
+            <div className="flex justify-between items-start mb-24 relative">
+              <div className="absolute -top-16 left-0 w-32 h-[2px] bg-accent"></div>
               <div>
-                <h1 className="text-3xl font-serif text-slate-900 mb-4 tracking-tight">INVOICE</h1>
-                <div className="text-sm text-slate-600">{invoiceDetails.invoiceNumber}</div>
+                <h1 className="text-4xl font-serif text-slate-900 mb-6 tracking-tight">FINAL INVOICE</h1>
+                <div className="text-xs font-display font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                  Document No. <span className="text-slate-900">{invoiceDetails.invoiceNumber}</span>
+                </div>
               </div>
-              <div className="text-right text-sm text-slate-700">
-                <div className="font-bold text-slate-900 mb-1">{parties.businessName}</div>
-                <div className="whitespace-pre-wrap">{parties.businessAddress}</div>
-                {parties.businessVat && <div className="mt-1">VAT: {parties.businessVat}</div>}
+              <div className="text-right">
+                <div className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-4">REMIT TO</div>
+                <div className="font-serif text-lg text-slate-900 mb-2 leading-none uppercase">{parties.businessName}</div>
+                <div className="text-[11px] leading-relaxed text-slate-500 whitespace-pre-wrap font-sans opacity-80">{parties.businessAddress}</div>
+                {parties.businessVat && <div className="text-[10px] font-bold text-slate-400 mt-2">VAT {parties.businessVat}</div>}
               </div>
             </div>
 
             {/* Bill To & Details */}
-            <div className="flex justify-between items-start mb-16">
-              <div className="text-sm text-slate-700">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Billed To</div>
-                <div className="font-bold text-slate-900 mb-1">{parties.clientName}</div>
-                <div className="whitespace-pre-wrap">{parties.clientAddress}</div>
-                {parties.clientVat && <div className="mt-1">VAT: {parties.clientVat}</div>}
+            <div className="flex flex-col md:flex-row justify-between gap-16 mb-24">
+              <div className="flex-1">
+                <div className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-6 border-b border-accent/10 pb-2">BILLED TO</div>
+                <div className="font-serif text-2xl text-slate-900 mb-3">{parties.clientName}</div>
+                <div className="text-xs leading-relaxed text-slate-500 whitespace-pre-wrap font-sans opacity-80">{parties.clientAddress}</div>
+                {parties.clientVat && <div className="text-[10px] font-bold text-slate-400 mt-3 italic underline decoration-accent/30 tracking-wider">VAT {parties.clientVat}</div>}
               </div>
-              <div className="text-right text-sm text-slate-700 flex flex-col gap-2">
-                <div className="flex justify-end gap-4"><span className="text-slate-400">Issue date:</span> {invoiceDetails.issueDate}</div>
-                <div className="flex justify-end gap-4"><span className="text-slate-400">Due Date:</span> {invoiceDetails.dueDate}</div>
-                <div className="flex justify-end gap-4 text-slate-500">{invoiceDetails.paymentTerms}</div>
+              <div className="w-px bg-slate-100 hidden md:block"></div>
+              <div className="md:text-right flex flex-col gap-6">
+                <div>
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">ISSUE DATE</div>
+                  <div className="text-sm font-display font-bold text-slate-900">{invoiceDetails.issueDate}</div>
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">PAYMENT DUE</div>
+                  <div className="text-sm font-display font-bold text-slate-900">{invoiceDetails.dueDate}</div>
+                </div>
+                <div className="px-4 py-2 bg-slate-50 rounded text-[11px] font-bold text-slate-500 tracking-wider inline-block">
+                  TERMS: {invoiceDetails.paymentTerms}
+                </div>
               </div>
             </div>
 
             {/* Table */}
-            <div className="mb-12">
-              <table className="w-full text-sm text-slate-700 printable-table">
+            <div className="mb-auto">
+              <table className="w-full text-sm text-slate-800 printable-table border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="text-left font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans">Description</th>
-                    <th className="text-right font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans w-20">Qty</th>
-                    <th className="text-right font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans w-24">Rate</th>
-                    <th className="text-right font-bold text-[10px] uppercase tracking-widest text-slate-500 pb-3 font-sans w-28">Amount</th>
+                  <tr className="border-b-2 border-slate-900">
+                    <th className="text-left font-display font-bold text-[10px] uppercase tracking-[0.2em] text-slate-900 py-4">Service Description</th>
+                    <th className="text-right font-display font-bold text-[10px] uppercase tracking-[0.2em] text-slate-900 py-4 w-20">Qty</th>
+                    <th className="text-right font-display font-bold text-[10px] uppercase tracking-[0.2em] text-slate-900 py-4 w-28">Rate</th>
+                    <th className="text-right font-display font-bold text-[10px] uppercase tracking-[0.2em] text-slate-900 py-4 w-32">Total</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {lineItems.map((item) => (
-                    <tr key={item.id}>
-                      <td className="py-4">{item.description || '...'}</td>
-                      <td className="py-4 text-right">{item.qty}</td>
-                      <td className="py-4 text-right">£{item.rate.toFixed(2)}</td>
-                      <td className="py-4 text-right">£{(item.qty * item.rate).toFixed(2)}</td>
+                    <tr key={item.id} className="group transition-colors hover:bg-slate-50/50">
+                      <td className="py-6 font-medium text-slate-700 leading-snug">{item.description || 'Service not specified'}</td>
+                      <td className="py-6 text-right font-display text-slate-500">{item.qty}</td>
+                      <td className="py-6 text-right font-display text-slate-500">£{item.rate.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
+                      <td className="py-6 text-right font-display font-bold text-slate-900">£{(item.qty * item.rate).toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
               {/* Totals */}
-              <div className="flex justify-end mt-6">
-                <div className="w-64 text-sm">
-                  <div className="flex justify-between py-2 text-slate-600">
+              <div className="flex justify-end mt-12 bg-slate-50 p-8 rounded-xl border border-slate-100">
+                <div className="w-full max-w-[240px] text-sm">
+                  <div className="flex justify-between py-2 text-slate-500 font-medium">
                     <span>Subtotal</span>
-                    <span>£{subtotal.toFixed(2)}</span>
+                    <span>£{subtotal.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
                   </div>
                   {vatTreatment !== 'No VAT' && (
-                    <div className="flex justify-between py-2 text-slate-600 border-b border-slate-200">
-                      <span>{vatTreatment}</span>
-                      <span>£{vatAmount.toFixed(2)}</span>
+                    <div className="flex justify-between py-2 text-slate-500 border-b border-slate-200 mb-4 pb-4 font-medium">
+                      <span>VAT ({vatTreatment})</span>
+                      <span>£{vatAmount.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
                     </div>
                   )}
-                  <div className="flex justify-between py-4 text-lg font-bold text-slate-900 border-t border-slate-200 mt-2">
-                    <span>Total Due</span>
-                    <span>£{total.toFixed(2)}</span>
+                  <div className="flex justify-between py-2 text-xl font-display font-bold text-slate-900">
+                    <span className="text-accent underline decoration-accent/30 underline-offset-8">Total Due</span>
+                    <span>£{total.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </div>

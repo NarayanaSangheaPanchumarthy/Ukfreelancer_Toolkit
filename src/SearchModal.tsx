@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
+import Fuse from 'fuse.js';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -26,18 +27,29 @@ export default function SearchModal({ isOpen, onClose, onNavigate, tools, navIte
     }
   }, [isOpen, onClose]);
 
+  const toolsFuse = useMemo(() => new Fuse(tools, {
+    keys: ['title', 'description', 'tag'],
+    threshold: 0.3,
+    distance: 100,
+    ignoreLocation: true
+  }), [tools]);
+
+  const navItemsFuse = useMemo(() => new Fuse(navItems.map(item => ({ name: item })), {
+    keys: ['name'],
+    threshold: 0.3,
+    distance: 100,
+    ignoreLocation: true
+  }), [navItems]);
+
   if (!isOpen) return null;
 
-  const searchQuery = query.toLowerCase();
+  const filteredTools = query.trim() !== '' 
+    ? toolsFuse.search(query).map(result => result.item)
+    : [];
 
-  const filteredTools = tools.filter(
-    (tool) =>
-      tool.title.toLowerCase().includes(searchQuery) ||
-      tool.description.toLowerCase().includes(searchQuery) ||
-      tool.tag.toLowerCase().includes(searchQuery)
-  );
-
-  const filteredNavItems = navItems.filter((item) => item.toLowerCase().includes(searchQuery));
+  const filteredNavItems = query.trim() !== ''
+    ? navItemsFuse.search(query).map(result => result.item.name)
+    : [];
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4 bg-slate-900/40 backdrop-blur-sm print:hidden">

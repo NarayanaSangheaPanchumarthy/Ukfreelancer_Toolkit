@@ -49,83 +49,107 @@ export default function TaxEstimator() {
   }, [income, expenses]);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 md:px-8 py-12 pt-8">
-      {/* Header */}
-      <div className="mb-12">
-        <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-3">
-          PLANNING ESTIMATE
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-4 tracking-tight">
-          UK Self-Employed Tax <br/> Estimator
-        </h1>
-        <p className="text-slate-500 text-sm max-w-xl leading-relaxed">
-          Estimate taxable profit, income tax, and National Insurance from annual freelance income and expenses.
-        </p>
-      </div>
-
-      <div className="bg-white border border-slate-200 shadow-sm mb-16">
+    <div className="bg-[#fcfdfd] min-h-screen py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 p-8 md:p-10 gap-8 border-b border-slate-200">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
           <div>
-            <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">ANNUAL INCOME</label>
-            <input
-              type="number"
-              value={income}
-              onChange={(e) => setIncome(e.target.value)}
-              className="w-full border border-slate-300 p-3 text-sm focus:border-slate-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">ALLOWABLE EXPENSES</label>
-            <input
-              type="number"
-              value={expenses}
-              onChange={(e) => setExpenses(e.target.value)}
-              className="w-full border border-slate-300 p-3 text-sm focus:border-slate-500 focus:outline-none"
-            />
+            <div className="text-[11px] font-bold text-accent uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+              <span className="w-8 h-[1px] bg-accent/30"></span>
+              FISCAL PROJECTION
+            </div>
+            <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.95]">
+              Tax <span className="italic text-accent">Forecasting</span> UK.
+            </h1>
+            <p className="text-slate-500 text-xl font-light max-w-2xl leading-relaxed">
+              Model potential UK self-employed tax liability with instant structural feedback. Engineering precision for independent enterprise.
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-slate-200">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">ESTIMATED PROFIT</h3>
-            <div className="text-3xl font-serif font-bold text-slate-900">£{results.profit.toFixed(2)}</div>
+        <div className="bg-white border border-slate-100 rounded-[4rem] shadow-2xl mb-24 overflow-hidden relative group">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full -translate-y-48 translate-x-48 blur-3xl group-hover:bg-accent/10 transition-all duration-1000"></div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 p-12 md:p-16 gap-12 bg-slate-50 relative z-10">
+            <div className="space-y-6">
+              <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">GROSS ANNUAL REVENUE</label>
+              <div className="relative">
+                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 font-serif text-3xl">£</span>
+                <input
+                  type="number"
+                  value={income}
+                  onChange={(e) => setIncome(e.target.value)}
+                  className="w-full bg-white border border-slate-100 rounded-3xl p-8 pl-14 text-4xl font-serif focus:ring-2 focus:ring-accent/10 focus:border-accent/10 transition-all outline-none shadow-sm"
+                />
+              </div>
+            </div>
+            <div className="space-y-6">
+              <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">ALLOWABLE DISBURSEMENTS</label>
+              <div className="relative">
+                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 font-serif text-3xl">£</span>
+                <input
+                  type="number"
+                  value={expenses}
+                  onChange={(e) => setExpenses(e.target.value)}
+                  className="w-full bg-white border border-slate-100 rounded-3xl p-8 pl-14 text-4xl font-serif focus:ring-2 focus:ring-accent/10 focus:border-accent/10 transition-all outline-none shadow-sm"
+                />
+              </div>
+            </div>
           </div>
-          <div className="p-8 md:p-10 border-b border-slate-200">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">TAXABLE INCOME</h3>
-            <div className="text-3xl font-serif font-bold text-slate-900">£{results.taxableIncome.toFixed(2)}</div>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-slate-200">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">INCOME TAX</h3>
-            <div className="text-3xl font-serif font-bold text-slate-900">£{results.incomeTax.toFixed(2)}</div>
-          </div>
-          <div className="p-8 md:p-10">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">NATIONAL INSURANCE</h3>
-            <div className="text-3xl font-serif font-bold text-slate-900">£{results.class4NIC.toFixed(2)}</div>
-          </div>
-        </div>
-        
-        <div className="bg-[#12181c] p-8 md:p-10 text-white">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-300 mb-4">ESTIMATED TOTAL SET ASIDE</h3>
-          <div className="text-3xl lg:text-4xl font-serif font-bold">£{results.totalTax.toFixed(2)}</div>
-        </div>
-      </div>
 
-      <div className="border border-slate-200 bg-white p-8 md:p-10 mb-8 max-w-4xl">
-        <h2 className="text-3xl font-serif text-slate-900 mb-6 tracking-tight">How this estimate works</h2>
-        <p className="text-slate-800 text-sm leading-relaxed mb-6">
-          This uses a simplified England/Wales/Northern Ireland style calculation: income minus expenses, personal
-          allowance, income tax bands, and Class 4 National Insurance. It is a rough estimate, not tax advice.
-        </p>
-        <p className="text-red-600 font-bold text-sm">
-          Always check current HMRC rules or speak to an accountant before making tax decisions.
-        </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 bg-white relative z-10">
+            <div className="p-12 md:p-16 border-b md:border-b-0 md:border-r border-slate-50 group/metric transition-all hover:bg-slate-50">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-6">Net Fiscal Profit</h3>
+              <div className="text-4xl md:text-5xl font-serif text-slate-900 tracking-tighter italic">£{results.profit.toLocaleString('en-GB')}</div>
+            </div>
+            <div className="p-12 md:p-16 border-b md:border-b-0 group/metric transition-all hover:bg-slate-50">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-6">Taxable Exposure</h3>
+              <div className="text-4xl md:text-5xl font-serif text-slate-900 tracking-tighter italic opacity-60">£{results.taxableIncome.toLocaleString('en-GB')}</div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 bg-white border-t border-slate-50 relative z-10">
+            <div className="p-12 md:p-16 border-b md:border-b-0 md:border-r border-slate-50 group/metric transition-all hover:bg-slate-50">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-6">Income Tax Calculus</h3>
+              <div className="text-4xl md:text-5xl font-serif text-slate-900 tracking-tighter italic">£{results.incomeTax.toLocaleString('en-GB')}</div>
+            </div>
+            <div className="p-12 md:p-16 group/metric transition-all hover:bg-slate-50">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-6">NI Contribution (Class 4)</h3>
+              <div className="text-4xl md:text-5xl font-serif text-slate-900 tracking-tighter italic">£{results.class4NIC.toLocaleString('en-GB')}</div>
+            </div>
+          </div>
+          
+          <div className="bg-slate-900 p-16 md:p-20 text-white relative group/total overflow-hidden z-20">
+            <div className="absolute top-0 right-0 w-96 h-full bg-accent/20 -skew-x-12 translate-x-48 group-hover/total:translate-x-32 transition-transform duration-1000"></div>
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-slate-400 mb-8 relative z-10 flex items-center gap-3">
+              LIABILITY SYNTHESIS
+              <span className="w-12 h-[1px] bg-accent/30"></span>
+            </h3>
+            <div className="text-6xl lg:text-8xl font-serif font-bold text-accent relative z-10 tracking-[ -0.04em] italic">
+              £{results.totalTax.toLocaleString('en-GB')}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 p-12 md:p-16 rounded-[4rem] border border-slate-100 mb-16 relative overflow-hidden group/intel">
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-accent/5 rounded-full translate-y-32 translate-x-32 blur-3xl group-hover/intel:bg-accent/10 transition-all duration-1000"></div>
+          <h2 className="text-3xl font-serif text-slate-900 mb-8 tracking-tight italic flex items-center gap-4 relative z-10">
+            Methodology
+            <span className="w-12 h-[1px] bg-accent/20"></span>
+          </h2>
+          <div className="space-y-6 text-slate-500 font-light text-lg leading-relaxed relative z-10 max-w-4xl">
+            <p>
+              This synthesis utilizes a model reflecting 2024/25 UK tax protocols, incorporating personal allowance thresholds, graduated income tax bands, and Class 4 National Insurance vectors. 
+            </p>
+            <p className="text-accent font-bold italic">
+              Crucial: This is a high-level model, not professional fiscal advice. Consult HMRC or a certified accountant prior to executing tax strategy.
+            </p>
+          </div>
+        </div>
+        
+        <ProFeaturesCTA />
       </div>
-      
-      <ProFeaturesCTA />
     </div>
   );
 }

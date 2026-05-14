@@ -87,60 +87,86 @@ export default function StartUpExpenseCalculator() {
   }));
 
   return (
-    <div className="bg-[#f5f7f9] min-h-screen py-12 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+    <div className="bg-[#fcfdfd] min-h-screen py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
           <div>
-            <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">
-              LAUNCH COSTS
+            <div className="text-[11px] font-bold text-accent uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
+              <span className="w-8 h-[1px] bg-accent/30"></span>
+              VENTURE ARCHITECTURE
             </div>
-            <h1 className="text-4xl md:text-6xl font-serif text-slate-900 mb-4 tracking-tight">
-              Start Up Expense Calculator
+            <h1 className="text-5xl md:text-8xl font-serif text-slate-900 mb-8 tracking-tighter leading-[0.95]">
+              Startup <span className="italic text-accent">Capital</span> Synthesis.
             </h1>
-            <p className="text-slate-600 text-lg max-w-2xl">
-              Estimate one-off launch costs before opening: equipment, legal, marketing, stock, and runway.
+            <p className="text-slate-500 text-xl font-light max-w-2xl leading-relaxed">
+              Deconstruct one-off launch costs—equipment, legal, marketing, and runway—into a high-integrity fiscal blueprint.
             </p>
           </div>
-          <div className="flex gap-3 shrink-0 flex-wrap">
-            <button onClick={() => window.print()} className="mt-6 md:mt-0 flex items-center bg-white border border-slate-300 text-slate-800 px-6 py-3 font-bold text-sm hover:bg-slate-50 transition-colors shrink-0 rounded">
-              <Download className="w-4 h-4 mr-2" />
-              Download summary
+          <div className="flex gap-4 shrink-0 flex-wrap">
+            <button 
+              onClick={() => window.print()} 
+              className="group bg-white border border-slate-100 text-slate-900 px-8 py-5 font-bold text-[11px] uppercase tracking-[0.2em] rounded-2xl hover:bg-slate-50 transition-all shadow-xl flex items-center gap-3 shrink-0"
+            >
+              <Download className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+              Export Summary
             </button>
-            <button onClick={handleSaveToDrive} disabled={isSaving} className="mt-6 md:mt-0 flex items-center bg-[#1a1f24] text-white px-6 py-3 font-bold text-sm hover:bg-black transition-colors shrink-0 disabled:opacity-50 rounded shadow">
-              <Cloud className="w-4 h-4 mr-2" />
-              {isSaving ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save to Drive'}
+            <button 
+              onClick={handleSaveToDrive} 
+              disabled={isSaving} 
+              className="group bg-slate-900 text-white px-10 py-5 font-bold text-[11px] uppercase tracking-[0.2em] rounded-2xl hover:bg-accent transition-all shadow-2xl flex items-center gap-3 shrink-0 disabled:opacity-50"
+            >
+              <Cloud className={`w-4 h-4 ${isSaving ? 'animate-pulse' : 'group-hover:scale-110 transition-transform'}`} />
+              {isSaving ? 'ARCHIVING...' : saveSuccess ? 'SYNTHESIZED!' : 'SAVE TO DRIVE'}
             </button>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-1/3 space-y-6">
-            <div className="bg-white border border-slate-200 p-8 shadow-sm">
-              <div className="mb-8">
-                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-3">
-                  AVAILABLE STARTUP BUDGET
+        <div className="flex flex-col lg:flex-row gap-12">
+          <div className="w-full lg:w-[450px] space-y-10">
+            <div className="bg-white border border-slate-100 p-10 rounded-[2.5rem] shadow-xl">
+              <div className="mb-10">
+                <label className="block text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em] mb-3 ml-1">
+                  TOTAL CAPITAL ALLOCATION
                 </label>
-                <input 
-                  type="number" value={budget} onChange={(e) => setBudget(e.target.value)}
-                  className="w-full border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none font-medium"
-                />
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-serif">£</span>
+                  <input 
+                    type="number" value={budget} onChange={(e) => setBudget(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-100 p-4 pl-8 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all font-medium shadow-sm"
+                  />
+                </div>
               </div>
 
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-serif text-slate-900">Categories</h3>
-                <button onClick={addExpense} className="text-[#a67c52] text-sm font-bold flex items-center hover:text-[#8c6b2e] transition-colors">
-                  <Plus className="w-4 h-4 mr-1 stroke-[3]" /> Add category
+              <div className="flex justify-between items-center mb-8 border-b border-slate-50 pb-4">
+                <h3 className="text-xl font-serif text-slate-900 italic">Expense Registry</h3>
+                <button onClick={addExpense} className="text-accent text-[10px] font-bold uppercase tracking-widest flex items-center hover:opacity-70 transition-opacity">
+                  <Plus className="w-3 h-3 mr-2 bg-accent text-white rounded-full p-0.5" /> Add category
                 </button>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {expenses.map(exp => (
-                  <div key={exp.id} className="flex gap-2">
-                    <input type="text" value={exp.name} onChange={(e) => handleExpenseChange(exp.id, 'name', e.target.value)} className="flex-grow border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none w-1/2" />
-                    <input type="number" value={exp.amount || ''} onChange={(e) => handleExpenseChange(exp.id, 'amount', e.target.value)} className="w-24 border border-slate-200 p-3 text-slate-900 focus:outline-none focus:border-blue-500 rounded-none text-right" />
-                    <button onClick={() => removeExpense(exp.id)} className="p-3 border border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors flex items-center justify-center shrink-0">
+                  <div key={exp.id} className="group flex gap-3 items-center">
+                    <div className="flex-grow relative">
+                      <input 
+                        type="text" 
+                        value={exp.name} 
+                        onChange={(e) => handleExpenseChange(exp.id, 'name', e.target.value)} 
+                        className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium shadow-sm" 
+                      />
+                    </div>
+                    <div className="w-32 relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 text-xs font-serif">£</span>
+                      <input 
+                        type="number" 
+                        value={exp.amount || ''} 
+                        onChange={(e) => handleExpenseChange(exp.id, 'amount', e.target.value)} 
+                        className="w-full bg-slate-50 border border-slate-100 p-4 pl-6 rounded-xl text-slate-900 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm font-medium text-right shadow-sm" 
+                      />
+                    </div>
+                    <button onClick={() => removeExpense(exp.id)} className="p-3 text-slate-300 hover:text-accent transition-colors shrink-0">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -149,45 +175,50 @@ export default function StartUpExpenseCalculator() {
             </div>
           </div>
 
-          <div className="w-full lg:w-2/3">
-            <div className="bg-white border border-slate-200 p-8 shadow-sm print:shadow-none print:p-0">
-              <div className="text-[10px] font-bold text-[#a67c52] uppercase tracking-widest mb-4">LAUNCH SUMMARY</div>
-              <h2 className="text-4xl font-serif text-slate-900 mb-8 tracking-tight">Start Up Expense Calculator</h2>
+          <div className="flex-1">
+            <div className="bg-white border border-slate-100 p-12 md:p-16 rounded-[4rem] shadow-2xl print:shadow-none print:p-0 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full -translate-y-48 translate-x-48 blur-3xl group-hover:bg-accent/10 transition-all duration-1000"></div>
+              
+              <div className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-6 relative z-10 flex items-center gap-3">
+                FINANCIAL MATRIX
+                <span className="w-12 h-[1px] bg-accent/20"></span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-12 tracking-tight italic relative z-10">Launch Summary</h2>
 
-              <div className="grid grid-cols-2 border border-slate-200 mb-8">
-                <div className="p-6 border-b border-r border-slate-200">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">BUDGET</div>
-                  <div className="text-3xl font-bold font-serif text-slate-900 tracking-tight">£{startingBudget.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 relative z-10">
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Target Budget</div>
+                  <div className="text-3xl md:text-4xl font-serif text-slate-900 tracking-tighter italic">£{startingBudget.toLocaleString('en-GB')}</div>
                 </div>
-                <div className="p-6 border-b border-slate-200">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">PLANNED</div>
-                  <div className="text-3xl font-bold font-serif text-slate-900 tracking-tight">£{totalRequired.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Planned Expenditure</div>
+                  <div className="text-3xl md:text-4xl font-serif text-slate-900 tracking-tighter italic">£{totalRequired.toLocaleString('en-GB')}</div>
                 </div>
-                <div className="p-6 border-r border-slate-200">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">REMAINING</div>
-                  <div className={`text-3xl font-bold font-serif tracking-tight ${remainingBuffer >= 0 ? 'text-[#2a8b5e]' : 'text-red-600'}`}>
-                    {remainingBuffer < 0 ? '-' : ''}£{Math.abs(remainingBuffer).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Remaining Buffer</div>
+                  <div className={`text-3xl md:text-4xl font-serif tracking-tighter italic ${remainingBuffer >= 0 ? 'text-slate-900' : 'text-accent'}`}>
+                    {remainingBuffer < 0 ? '-' : ''}£{Math.abs(remainingBuffer).toLocaleString('en-GB')}
                   </div>
                 </div>
-                <div className="p-6">
-                  <div className="text-[10px] font-bold text-slate-800 uppercase tracking-widest mb-2">USED</div>
-                  <div className="text-3xl font-bold font-serif text-slate-900 tracking-tight">{margin.toFixed(0)}%</div>
+                <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group/metric transition-all hover:bg-white hover:shadow-xl hover:scale-[1.02]">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Allocated %</div>
+                  <div className="text-3xl md:text-4xl font-serif text-slate-900 tracking-tighter italic">{margin.toFixed(0)}%</div>
                 </div>
               </div>
 
-              <div className="border border-slate-200 p-8 mb-8 flex items-center justify-center min-h-[360px] relative">
+              <div className="bg-white border border-slate-100 p-12 rounded-[3.5rem] mb-12 flex items-center justify-center min-h-[420px] shadow-sm relative z-10 group/pie">
                 {chartData.length > 0 ? (
                   <div className="w-full flex justify-center items-center flex-col">
-                    <div style={{ width: '100%', height: 260 }}>
+                    <div style={{ width: '100%', height: 300 }}>
                       <ResponsiveContainer>
                         <PieChart>
                           <Pie
                             data={chartData}
                             cx="50%"
                             cy="50%"
-                            innerRadius={70}
-                            outerRadius={100}
-                            paddingAngle={2}
+                            innerRadius={80}
+                            outerRadius={120}
+                            paddingAngle={4}
                             dataKey="value"
                             stroke="none"
                           >
@@ -196,18 +227,24 @@ export default function StartUpExpenseCalculator() {
                             ))}
                           </Pie>
                           <Tooltip 
-                            formatter={(value: number) => [`£${value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, '']}
-                            contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                            formatter={(value: number) => [`£${value.toLocaleString('en-GB')}`, '']}
+                            contentStyle={{ 
+                              borderRadius: '24px', 
+                              border: '1px solid #f1f5f9', 
+                              boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+                              padding: '16px' 
+                            }}
+                            itemStyle={{ fontWeight: 600, fontSize: '12px' }}
                           />
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
                     {/* Compact Legend */}
-                    <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 px-4 w-full">
+                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 mt-10 px-4 w-full">
                       {chartData.map((entry, index) => (
-                        <div key={index} className="flex items-center text-xs text-slate-500 font-medium whitespace-nowrap">
+                        <div key={index} className="flex items-center text-[10px] text-slate-400 font-bold uppercase tracking-widest whitespace-nowrap">
                           <span 
-                            className="w-2.5 h-2.5 mr-1.5 flex-shrink-0 bg-slate-200" 
+                            className="w-2.5 h-2.5 mr-2 rounded-full flex-shrink-0" 
                             style={{ backgroundColor: entry.color }}
                           ></span>
                           {entry.name}
@@ -216,15 +253,18 @@ export default function StartUpExpenseCalculator() {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-slate-400 font-medium">No planned expenses to display</div>
+                  <div className="text-slate-300 font-serif italic text-xl">Allocation data pending...</div>
                 )}
               </div>
               
-              <div>
-                <h3 className="text-xl font-serif mb-4 pb-2 border-b border-slate-200">Recommendations</h3>
-                <div className="space-y-3 text-slate-600">
-                  <p>The plan is workable but tight. Keep a contingency line visible so surprises do not derail the plan.</p>
-                  <p>For startup costs, check that the runway line covers enough months before revenue becomes reliable.</p>
+              <div className="bg-slate-50 p-10 rounded-[3rem] border border-slate-100 relative z-10">
+                <h3 className="text-2xl font-serif text-slate-900 mb-6 tracking-tight italic flex items-center gap-4">
+                  Strategic Feedback
+                  <span className="w-12 h-[1px] bg-accent/20"></span>
+                </h3>
+                <div className="space-y-4 text-slate-500 font-light text-lg leading-relaxed">
+                  <p>The allocation blueprint is workable but tightly constrained. Maintain a visible contingency line to absorb systemic irregularities without compromising mission objectives.</p>
+                  <p>Verify that your operational runway line adequately covers projected duration before revenue normalization.</p>
                 </div>
               </div>
             </div>
